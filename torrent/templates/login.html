@@ -156,16 +156,28 @@
             background-color: rgba(31, 30, 30, 0.5);
             backdrop-filter: blur(5px);
             padding: 20px;
-            margin-top: 200px;
+            margin-top: 100px;
             padding-top: 90px;
             max-width: 50%;
             height: 580px;
             border-radius: 20px;
 
         }
+        @media (max-width:700px) {
+            #container1{
+                max-width: none;
+            }
+
+        }
+        @media (max-width: 575px) {
+            #button1,#button {
+                font-size: 14px;
+                padding: 8px 16px;
+            }
+        }
     
         #contact{
-            margin-top: 300px;
+            margin-top: 200px;
         }
 
 
@@ -184,30 +196,32 @@
 
             <!-- <section id="contact" style="background-color: #000; color: #fff; padding: 50px 0;"> -->
                 <div id="container1" class="container">
-                    <h1 id="about" class="text-center mb-4" data-aos="zoom-in" data-aos-duration="1500"><i class="fa-solid fa-user"></i>&nbsp;&nbsp;Login</h1>
-                    <form action="/login"  id="contactForm" method="POST" style="max-width: 600px; margin: 0 auto;" data-aos="fade-in" data-aos-duration="1500">
-                        <div class="mb-3">
-                            <label for="name" class="form-label" style="color: #fff;">Username</label>
-                            <input type="text" class="form-control" id="name" name="name" placeholder="Your Name" style="background-color: #222; color: #fff; border: 1px solid #077b32;" required>
+                    <h1 id="about" class="text-center mb-4" data-aos="zoom-in" data-aos-duration="1500">
+                        <i class="fa-solid fa-user"></i>&nbsp;&nbsp;Login
+                    </h1>
+                    <div class="row justify-content-center">
+                        <div class="col-12 col-md-6 col-lg-4">
+                            <form action="/login" id="contactForm" method="POST" data-aos="fade-in" data-aos-duration="1500">
+                                <div class="mb-3">
+                                    <label for="name" class="form-label" style="color: #fff;">Username</label>
+                                    <input type="text" class="form-control" id="name" name="name" placeholder="Your Name" style="background-color: #222; color: #fff; border: 1px solid #077b32;" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="password" class="form-label" style="color: #fff;">Password</label>
+                                    <input type="password" class="form-control" id="password" name="password" placeholder="Enter Your password" style="background-color: #222; color: #fff; border: 1px solid #077b32;" required>
+                                </div>
+                                <div class="text-center">
+                                    <button type="submit" id="button" class="btn" style="padding: 10px 20px; cursor: pointer;">
+                                        Login
+                                    </button><br><br>
+                                    <a id="button1" href="../register">Register</a>
+                                </div>
+                            </form>
                         </div>
-                        <div class="mb-3">
-                            <label for="password" class="form-label" style="color: #fff;">Password</label>
-                            <input type="password" class="form-control" id="email" name="email" placeholder="Enter Your password" style="background-color: #222; color: #fff; border: 1px solid #077b32;" required>
-                        </div>
-                        <!-- <div class="mb-3">
-                            <label for="message" class="form-label" style="color: #fff;">Message</label>
-                            <textarea class="form-control" id="message" name="message" rows="4" placeholder="Your Message" style="background-color: #222; color: #fff; border: 1px solid #077b32;" required></textarea>
-                        </div> -->
-                        <div class="text-center">
-                            <button type="submit" id="button" class="btn" style=" padding: 10px 20px;  cursor: pointer;">
-                                Login
-                            </button><br><br>
-                            <a id="button1" href="register.html">Register</a>
-                        </div>
-                    </form>
+                    </div>
                 </div>
-            <!-- </section> -->
-             
+                
+
 
 
 
