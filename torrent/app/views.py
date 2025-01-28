@@ -23,4 +23,12 @@ def sec(req,id):
         requ = GameRequirement.objects.get(game=game)
     except GameRequirement.DoesNotExist:
         requ = None 
-    return render(req,'sec.html',{'game':game,'requ':requ})
+
+    try:
+        review = Review.objects.get(game=game)
+    except Review.DoesNotExist:
+        review = None
+    
+    return render(req,'sec.html',{'game':game,'requ':requ,'review':review})
+
+

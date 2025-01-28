@@ -270,7 +270,38 @@
   margin-top: 10px;
   display: inline-block;
 }
-
+.card {
+            background-color: #1e1e1e;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+        }
+        .rating {
+            color: rgb(253, 253, 253);
+            font-weight: bold;
+        }
+        .review-form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        input, textarea, button {
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+        }
+        input, textarea {
+            background-color: #333;
+            color: white;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
 
 
 
@@ -425,7 +456,7 @@
               
               <div class="d-grid gap-2 mt-3 mb-4">
                 {% if game.price == 0.00 %}
-                  <a href="{{ game.torrent_file }}" class="btn custom-button">Download Now</a>
+                  <a href="{{ game.torrent_file }}" class="btn custom-button" download>Download Now</a>
                 {% else %}
                   <button class=" btn custom-button">Buy Now</button>
                 {% endif %}
@@ -447,6 +478,33 @@
                 <button class="btn btn-link text-white text-decoration-none">Report</button>
               </div>
             </div>
+
+            <div class="col-md-8">
+              <h2>Critic Reviews</h2>
+              {% if review %}
+
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="card">
+                    <h3 class="text-white">Chris White</h3>
+                    <p class="rating">{{ review.rating }} / 10</p>
+                    <p class="text-white">"{{ review.comment }}"</p>
+                    <small class="text-secondary d-block text-left">{{ review.created_at|date:"M d, Y" }}</small>
+                  </div>
+                </div>
+              </div>
+              {% else %}
+              <p>No reviews available for this game.</p>
+              {% endif %}
+              <h2>Add Your Review</h2>
+              <form class="review-form">
+                <input type="text" placeholder="Your Name" required>
+                <input type="number" placeholder="Rating (1-10)" required min="1" max="10">
+                <textarea placeholder="Your Review" required></textarea>
+                <button type="submit">Submit Review</button>
+              </form>
+            </div>
+
           </div>
         </div>
       </div>
