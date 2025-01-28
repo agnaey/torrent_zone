@@ -23,6 +23,17 @@ class Game(models.Model):
 
     def __str__(self):
         return self.title
+
+class GameRequirement(models.Model):
+    game = models.OneToOneField(Game, on_delete=models.CASCADE, related_name="requirements")
+    operating_system = models.CharField(max_length=255)
+    processor = models.CharField(max_length=255)
+    memory = models.CharField(max_length=255)  
+    graphics = models.CharField(max_length=255)  
+    storage = models.CharField(max_length=255)  
+
+    def __str__(self):
+        return f"Requirements for {self.game.title}"
     
 
 class Purchase(models.Model):
