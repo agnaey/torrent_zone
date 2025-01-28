@@ -7,4 +7,6 @@ urlpatterns = [
 
     # ----------user------------------------------
     path('', views.index, name='index'),
+    path('sec/<id>',views.sec),
+
 ]

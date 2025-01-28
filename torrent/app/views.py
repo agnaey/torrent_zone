@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from .models import *
 
 # Create your views here.
 
@@ -13,4 +14,13 @@ def register(req):
 # --------------user--------------------
 
 def index(request):
-    return render(request, 'index.html')
+    games=Game.objects.all()
+    return render(request, 'index.html',{'games':games})
+
+def sec(req,id):
+    game=Game.objects.get(id=id)
+    try:
+        requ = GameRequirement.objects.get(game=game)
+    except GameRequirement.DoesNotExist:
+        requ = None 
+    return render(req,'sec.html',{'game':game,'requ':requ})

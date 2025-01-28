@@ -13,7 +13,7 @@ class Game(models.Model):
     genre = models.CharField(max_length=100)
     developer = models.CharField(max_length=255)
     release_date = models.DateField()
-    cover_image = models.ImageField()
+    image = models.ImageField()
     torrent_file = models.FileField()
     download_count = models.IntegerField(default=0)
     rating = models.FloatField(default=0.0)
@@ -26,11 +26,10 @@ class Game(models.Model):
 
 class GameRequirement(models.Model):
     game = models.OneToOneField(Game, on_delete=models.CASCADE, related_name="requirements")
-    operating_system = models.CharField(max_length=255)
+    os = models.CharField(max_length=255)
     processor = models.CharField(max_length=255)
     memory = models.CharField(max_length=255)  
     graphics = models.CharField(max_length=255)  
-    storage = models.CharField(max_length=255)  
 
     def __str__(self):
         return f"Requirements for {self.game.title}"

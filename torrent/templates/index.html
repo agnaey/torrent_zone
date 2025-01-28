@@ -153,6 +153,9 @@
             height: 260px;
             object-fit: cover;
         }
+        h5{
+            text-decoration: none;
+        }
 
 
 
@@ -219,26 +222,35 @@
         
     </section>
 
-
-<div class="container">
-    <h2 id="trending">Trending</h2>
-    <div class="row mt-5">
-
-        <div class="col">
-            <div class="card" style="width: 18rem; background-color: black; border: 1px solid #077b32; border-radius: 10px; box-shadow: 0 0 10px #077b32;">
-                <img src="https://images.unsplash.com/photo-1523275335684-37898b6c0770?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8Z2FtZSUyMG5hbWV8ZW58MHx8MHx8&w=1000&q=80" class="card-img-top" alt="..." style="border-bottom: 2px solid #077b32;">
-                <div class="card-body">
-                    <h5 class="card-title text-center" style="color: #077b32; text-shadow: 0 0 5px #077b32;">GAme NAme</h5>
-                    <p class="card-text text-center" style="color: #077b32;">2000$</p>
-            
+    <div class="container">
+        <h2 id="trending">Trending</h2>
+    
+        <!-- Loop through the games and create rows -->
+        <div class="row">
+            {% for i in games|slice:":4" %}
+                <div class="col-12 col-md-3 mb-4">  <!-- Adjust the number of columns per row -->
+                    <div class="card" style="background-color: black; border: 1px solid #077b32; border-radius: 10px; box-shadow: 0 0 10px #077b32;">
+                        <a style="text-decoration: none;" href="../sec/{{ i.id }}">
+                            <img src="{{ i.image.url }}" class="card-img-top img-fluid" alt="{{ i.name }}">
+                            <div class="card-body">
+                                <h5 class="card-title text-center" style="color: #077b32; text-shadow: 0 0 5px #077b32;">{{ i.title }}</h5>
+                                <p class="card-text text-center" style="color: #077b32;">
+                                    {% if i.price == 0.00 %}
+                                        Free
+                                    {% else %}
+                                    ₹{{ i.price }}
+                                    {% endif %}
+                                </p>
+                            </div>
+                        </a>
+                    </div>
                 </div>
-            </div>
+    
+
+            {% endfor %}
         </div>
     </div>
-             
-
-</div>
-
+    
 
 
 

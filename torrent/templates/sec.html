@@ -297,7 +297,7 @@
           <div class="collapse navbar-collapse justify-content-end " style="background-color: black;" id="navbarNav">
             <ul class="navbar-nav">
               <li class="nav-item" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="100">
-                <a class="nav-link" href="#home">Home</a>
+                <a class="nav-link" href="../">Home</a>
               </li>
               <li class="nav-item" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="200">
                 <a class="nav-link" href="#">Wishlist</a>
@@ -320,29 +320,31 @@
         <div class="row g-5">
           <!-- Left Section -->
           <div class="col-md-8">
-            <div class="ratio ratio-16x9 custom-green d-flex justify-content-center align-items-center rounded">
-              <span class="fs-3 fw-bold">Video Placeholder</span>
+            <div class="ratio ratio-16x9 d-flex justify-content-center align-items-center rounded">
+            <img src="{{ game.image.url }}" style="border-radius: 10px;" alt="">              
             </div>
       
             <!-- New Section -->
             <div class="mt-5">
-              <h5 class="mb-3">Technotopia</h5>
+              <h5 class="mb-3">{{ game.title }}</h5>
               <p class="text-white">
-                Technotopia is a city-builder roguelike card game. Take on the role of an AI designed to build a perfect city. Build districts, meet the needs of diverse communities, and maintain the delicate balance between factions vying for control over you!
+                {{ game.description }}
               </p>
               <div class="row">
                 <div class="col-md-6">
                   <h6>Genres</h6>
-                  <span class="badge bg-secondary">Card Game</span>
-                  <span class="badge bg-secondary">City Builder</span>
-                  <span class="badge bg-secondary">Narration</span>
+                  <span class="badge bg-secondary">{{ game.genre }}</span>
+                  <!-- <span class="badge bg-secondary">City Builder</span>
+                  <span class="badge bg-secondary">Narration</span> -->
                 </div>
                 <div class="col-md-6">
                   <h6>Features</h6>
                   <span class="badge bg-secondary">Single Player</span>
+                  <span class="badge bg-secondary">Multi Player</span>
+
                 </div>
               </div>
-              <div class="mt-4">
+              <!-- <div class="mt-4">
                 <h6>Build a perfect city</h6>
                 <p>
                   You will have a deck of cards with buildings at your disposal. Build skyscrapers, parks, residential districts, and transport highways. It's up to you to decide what the ideal metropolis should look like.
@@ -352,7 +354,7 @@
                 <p>
                   Four factions are fighting for control of the city: capitalists, aristocrats, politicians, and the common people. They will do anything to bend the others to their will, and every decision you make tips the scales. Play the role of arbiter, meeting everyone's needs equally.
                 </p>
-              </div>
+              </div> -->
             </div>
       
             <!-- System Requirements -->
@@ -362,22 +364,30 @@
                 <div class="requirement-column">
                   <h3 class="platform">Windows</h3>
                   <div class="requirement-section">
+                    {% if requ %}
                     <h4 class="section-title">Minimum</h4>
                     <ul class="requirement-list">
-                      <li><strong>OS version:</strong> Windows 10 (64-bit)</li>
-                      <li><strong>CPU:</strong> Intel Core i3-2120 (3.3 GHz)/AMD FX-4100 X4 (3.6 GHz)</li>
-                      <li><strong>Memory:</strong> 20 GB</li>
-                      <li><strong>GPU:</strong> 4 GB, GeForce GTX 970/Radeon RX 480</li>
+                      <li><strong>OS version:</strong>{{ requ.os }}</li>
+                      <li><strong>CPU:</strong> {{ requ.processor }}</li>
+                      <li><strong>Memory:</strong> {{ requ.memory }}</li>
+                      <li><strong>GPU:</strong> {{ requ.graphics }}</li>
                     </ul>
+                    {% else %}
+                    <p>No requirements available for this game.</p>
+                    {% endif %}
                   </div>
                   <div class="requirement-section">
+                    {% if requ %}
                     <h4 class="section-title">Recommended</h4>
                     <ul class="requirement-list ">
-                      <li><strong>OS version:</strong> Windows 10 (64-bit)</li>
-                      <li><strong>CPU:</strong> Intel Core i3-2120 (3.3 GHz)/AMD FX-4100 X4 (3.6 GHz)</li>
-                      <li><strong>Memory:</strong> 20 GB</li>
-                      <li><strong>GPU:</strong> 4 GB, GeForce GTX 970/Radeon RX 480</li>
+                      <li><strong>OS version:</strong> {{ requ.os }}</li>
+                      <li><strong>CPU:</strong>{{ requ.processor }}</li>
+                      <li><strong>Memory:</strong> {{ requ.memory }}</li>
+                      <li><strong>GPU:</strong> {{ requ.graphics }}</li>
                     </ul>
+                    {% else %}
+                    <p>No recommendation available for this game.</p>
+                    {% endif %}
                   </div>
                 </div>
                 <div class="language-support">
@@ -398,25 +408,37 @@
           <!-- Right Section -->
           <div class="col-md-4">
             <div class="card custom-card p-3">
-              <h1 class="h4">Technotopia</h1>
+              <h1 class="h4">{{ game.title }}</h1>
               <p class="text-white small mt-2">
-                Technotopia is a city-builder roguelike card game. Take on the role of an AI designed to build a perfect city. Build districts, meet the needs of citizens, and balance resources!
+              {{ game.description }}
+
               </p>
               <div class="mt-3">
-                <p class="h5">₹250</p>
+                <p class="h4 text-success">Price: 
+                  {% if game.price == 0.00 %}
+                    Free
+                  {% else %}
+                    ₹{{ game.price }}
+                  {% endif %}
+                </p>
               </div>
-              <div class="d-grid gap-2 mt-3">
-                <button class="btn custom-button">Buy Now</button>
-                <button class="btn custom-outline-button border">Add to Cart</button>
+              
+              <div class="d-grid gap-2 mt-3 mb-4">
+                {% if game.price == 0.00 %}
+                  <a href="{{ game.torrent_file }}" class="btn custom-button">Download Now</a>
+                {% else %}
+                  <button class=" btn custom-button">Buy Now</button>
+                {% endif %}
+              </div>
+              
                 <button class="btn custom-outline-button border">Add to Wishlist</button>
               </div>
               <div class="divider"></div>
               <div class="small">
                 <p>Epic Rewards: <span class="text-white">Earn 5% Back</span></p>
                 <p>Refund Type: <span class="text-white">Self-Refundable</span></p>
-                <p>Developer: <span class="text-white">Yustas</span></p>
-                <p>Publisher: <span class="text-white">Alawar</span></p>
-                <p>Release Date: <span class="text-white">12/23/24</span></p>
+                <p>Developer: <span class="text-white">{{ game.developer }}</span></p>
+                <p>Release Date: <span class="text-white">{{ game.release_date }}</span></p>
                 <p>Platform: <span class="text-white">Windows</span></p>
               </div>
               <div class="divider"></div>
