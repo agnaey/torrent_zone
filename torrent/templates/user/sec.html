@@ -330,9 +330,10 @@
               <li class="nav-item" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="100">
                 <a class="nav-link" href="../">Home</a>
               </li>
-              <li class="nav-item" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="200">
-                <a class="nav-link" href="#">Wishlist</a>
+              <li class="nav-item" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="300">
+                <a class="nav-link" href="../cart">Cart</a>
               </li>
+
               <li class="nav-item" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="300">
                 <a class="nav-link" href="#">History</a>
               </li>
@@ -359,7 +360,7 @@
             <div class="mt-5">
               <h5 class="mb-3">{{ game.title }}</h5>
               <p class="text-white">
-                {{ game.description }}
+                {{ game.des }}
               </p>
               <div class="row">
                 <div class="col-md-6">
@@ -456,20 +457,20 @@
               
               <div class="d-grid gap-2 mt-3 mb-4">
                 {% if game.price == 0.00 %}
-                  <a href="{{ game.torrent_file }}" class="btn custom-button" download>Download Now</a>
+                  <a href="{{ game.torrent }}" class="btn custom-button" download>Download Now</a>
                 {% else %}
                   <button class=" btn custom-button">Buy Now</button>
                 {% endif %}
               </div>
               
-                <button class="btn custom-outline-button border">Add to Wishlist</button>
+                <a href="../add_to_cart/{{id}}" class="btn custom-outline-button border">Add to Cart</a>
               </div>
               <div class="divider"></div>
               <div class="small">
                 <p>Epic Rewards: <span class="text-white">Earn 5% Back</span></p>
                 <p>Refund Type: <span class="text-white">Self-Refundable</span></p>
                 <p>Developer: <span class="text-white">{{ game.developer }}</span></p>
-                <p>Release Date: <span class="text-white">{{ game.release_date }}</span></p>
+                <p>Release Date: <span class="text-white">{{ game.date }}</span></p>
                 <p>Platform: <span class="text-white">Windows</span></p>
               </div>
               <div class="divider"></div>
@@ -486,7 +487,7 @@
               <div class="row">
                 <div class="col-md-4">
                   <div class="card">
-                    <h3 class="text-white">Chris White</h3>
+                    <h3 class="text-white">{{ review.user }}</h3>
                     <p class="rating">{{ review.rating }} / 10</p>
                     <p class="text-white">"{{ review.comment }}"</p>
                     <small class="text-secondary d-block text-left">{{ review.created_at|date:"M d, Y" }}</small>

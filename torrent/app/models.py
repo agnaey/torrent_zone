@@ -9,13 +9,13 @@ from django.views.generic.list import ListView
 
 class Game(models.Model):
     title = models.CharField(max_length=255)
-    description = models.TextField()
+    des = models.TextField()
     genre = models.CharField(max_length=100)
     developer = models.CharField(max_length=255)
     release_date = models.DateField()
     image = models.ImageField()
-    torrent_file = models.FileField()
-    download_count = models.IntegerField(default=0)
+    torrent = models.FileField()
+    count = models.IntegerField(default=0)
     rating = models.FloatField(default=0.0)
 
     is_paid = models.BooleanField(default=False) 
@@ -33,7 +33,12 @@ class GameRequirement(models.Model):
 
     def __str__(self):
         return f"Requirements for {self.game.title}"
-    
+
+class Cart(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    game = models.ForeignKey(Game, on_delete=models.CASCADE)
+    price = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+    added_at = models.DateTimeField(auto_now_add=True)  
 
 class Purchase(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
