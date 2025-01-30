@@ -164,7 +164,7 @@
                     <a class="nav-link" href="#">Contact</a>
                   </li>
                   <li class="nav-item" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="500">
-                    <a class="nav-link" href="../login"><span>Login</span></a>
+                    <a class="nav-link" href="../logout"><span>Logout</span></a>
                   </li>
                 </ul>
               </div>
@@ -176,12 +176,14 @@
             <h2 class="fw-bold mt-5">My Cart</h2>
             <div class="row">
             <div class="col-lg-8 cart-container p-4">
-                <div id="cart1" class="d-flex flex-column flex-md-row align-items-center ">
-                    <img src="" alt="Technotopia" class="game-image me-3 img-fluid">
+              {% for i in cart %}
+
+                <div id="cart1" class="d-flex flex-column flex-md-row align-items-center mt-3">
+                    <img src="{{ i.game.image.url }}" alt="Technotopia" class="game-image me-3 img-fluid">
                     <div class="flex-grow-1">
                         <div class="col-12 col-md-6 col-lg-12 d-flex justify-content-between align-items-center">
-                            <h4 class="mb-0">Technotopia</h4>
-                            <p class="mb-0"> <strong>₹250</strong></p>
+                            <h4 class="mb-0">{{ i.game.title }}</h4>
+                            <p class="mb-0"> <strong>₹{{ i.game.price }}</strong></p>
                         </div>
 
                         <span class="badge bg-secondary">Base Game</span>
@@ -190,17 +192,24 @@
                         <p class="text-success">Self-Refundable</p>
                     </div>
                     <div class="mt-3 mt-md-0">
-                        <button class="btn text-secondary">Remove</button>
+                        <a href="../remove_cart/{{ i.id }}" class="btn  text-secondary">Remove</a>
+
                         <!-- <button class="btn btn-link text-light">Move to wishlist</button> -->
                     </div>
                 </div>
+                <hr>
+                {% empty %}
+                <p class="text-center">Your cart is empty</p>
+                {% endfor %}
+
             </div>
+
             
             <div class="cart-container mt-3 p-4 col-lg-3">
                 <h5>Games and Apps Summary</h5>
                 <p class="d-flex justify-content-between">
                     <span>Price</span>
-                    <strong>₹250.00</strong>
+                    <strong>₹{{ total_price }}</strong>
                 </p>
                 <p class="d-flex justify-content-between text-white">
                     <span>Taxes</span>
@@ -209,7 +218,7 @@
                 <hr>
                 <p class="d-flex justify-content-between">
                     <span>Subtotal</span>
-                    <strong>₹250.00</strong>
+                    <strong>₹{{ total_price }}</strong>
                 </p>
                 <button class="btn btn-checkout fw-bold py-2">Check Out</button>
             </div>

@@ -204,21 +204,32 @@
     <div id="container1" class="container">
         <h1 id="about" class="text-center mb-4" data-aos="zoom-in" data-aos-duration="1500"><i
                 class="fa-solid fa-user"></i>&nbsp;&nbsp;Register</h1>
-        <form action="/login" id="contactForm" method="POST" style="max-width: 600px; margin: 0 auto;"
+
+                {% if messages %}
+                {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} alert-dismissible">
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    {{ message }}
+                </div>
+                {% endfor %}
+                {% endif %}
+
+        <form action="/register" id="contactForm" method="POST" style="max-width: 600px; margin: 0 auto;"
             data-aos="fade-in" data-aos-duration="1500">
+            {% csrf_token %}
             <div class="mb-3">
                 <label for="name" class="form-label" style="color: #fff;">Username</label>
-                <input type="text" class="form-control" id="name" name="name" placeholder="Your Name"
+                <input type="text" class="form-control" id="name" name="username" placeholder="Your Name"
                     style="background-color: #222; color: #fff; border: 1px solid #077b32;" required>
             </div>
             <div class="mb-3">
                 <label for="email" class="form-label" style="color: #fff;">Email</label>
-                <input type="email" class="form-control" id="email" name="email" placeholder="Your Email"
+                <input type="email" class="form-control" id="email" name="Email" placeholder="Your Email"
                     style="background-color: #222; color: #fff; border: 1px solid #077b32;" required>
             </div>
             <div class="mb-3">
                 <label for="password" class="form-label" style="color: #fff;">Password</label>
-                <input type="password" class="form-control" id="email" name="email" placeholder="Enter Your password"
+                <input type="password" class="form-control" id="email" name="password" placeholder="Enter Your password"
                     style="background-color: #222; color: #fff; border: 1px solid #077b32;" required>
             </div>
 
@@ -227,11 +238,11 @@
                     style="padding: 10px 20px; cursor: pointer; margin: 10px;">
                     Register
                 </button>
-                <a id="button1" href="../login" class="btn btn-link d-none d-sm-block" style="margin: 10px;">
+                <a id="button1" href="../" class="btn btn-link d-none d-sm-block" style="margin: 10px;">
                     Already have an account? Login
                 </a>
 
-                <a id="button1" href="../login" class="btn btn-link d-block d-sm-none" style="margin: 10px;">
+                <a id="button1" href="../" class="btn btn-link d-block d-sm-none" style="margin: 10px;">
                     Login
                 </a>
             </div>

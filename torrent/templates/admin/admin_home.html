@@ -189,13 +189,13 @@
                 <a class="nav-link" href="#home">Home</a>
               </li>
               <li class="nav-item" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="200">
-                <a class="nav-link" href="../cart">cart</a>
+                <a class="nav-link" href="../add_game">Add Games</a>
               </li>
               <li class="nav-item" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="300">
-                <a class="nav-link" href="#">History</a>
+                <a class="nav-link" href="#">Report</a>
               </li>
               <li class="nav-item" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="400">
-                <a class="nav-link" href="#">Contact</a>
+                <a class="nav-link" href="#">Review</a>
               </li>
               <li class="nav-item" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="500">
                 <a class="nav-link" href="../logout"><span>Logout</span></a>
@@ -210,27 +210,26 @@
     <section class="mt-5">
         <div id="home" class="main-container mb-5">
             <div class="content">
-                <h1 data-aos="fade-left" data-aos-duration="1500" data-aos-delay="700">Welcome to <span>TORRENT</span> ZONE</h1>
-                <div class="typewriter" data-aos="fade-right" data-aos-duration="1500" data-aos-delay="900">Where you can find <span
-                        class="typewriter-text"></span><label for="">|</label></div>
+                <h1 data-aos="fade-left" data-aos-duration="1500" data-aos-delay="700">Welcome to<span> ADMIN</span> Page</h1>
 
-                <div class=" mt-5 mb-5" data-aos="zoom-in" data-aos-duration="1500" data-aos-delay="1800">
+
+                <!-- <div class=" mt-5 mb-5" data-aos="zoom-in" data-aos-duration="1500" data-aos-delay="1800">
                     <a  id="button" href="#trending">EXPLORE</a>
-                </div>
+                </div> -->
             </div>
         </div>
         
     </section>
 
     <div class="container">
-        <h2 id="trending">Trending</h2>
+        <h2 id="trending">All Games</h2>
     
         <!-- Loop through the games and create rows -->
         <div class="row">
-            {% for i in games %}
+            {% for i in games|slice:":4" %}
                 <div class="col-12 col-md-3 mb-4">  <!-- Adjust the number of columns per row -->
                     <div class="card" style="background-color: black; border: 1px solid #077b32; border-radius: 10px; box-shadow: 0 0 10px #077b32;">
-                        <a style="text-decoration: none;" href="../sec/{{ i.id }}">
+                        <a style="text-decoration: none;" href="../pro_detail/{{ i.id }}">
                             <img src="{{ i.image.url }}" class="card-img-top img-fluid" alt="{{ i.name }}">
                             <div class="card-body">
                                 <h5 class="card-title text-center" style="color: #fafafa; text-shadow: 0 0 5px #077b32;">{{ i.title }}</h5>
@@ -271,48 +270,6 @@
     <script>
         AOS.init({ offset: 0 });
     </script>
-    <script>
-        function hamburg() {
-            const navbar = document.querySelector(".dropdown")
-            navbar.style.transform = "translateY(0px)"
-        }
-        function cancel() {
-            const navbar = document.querySelector(".dropdown")
-            navbar.style.transform = "translateY(-500px)"
-        }
-        // Typewriter Effect
-        const texts = [
-            "PREMIUM GAMES",
-            "ADVENTURE GAMES",
-            "SOULS GAMES",
-            "RACING GAMES",
-        ]
-        let speed = 100;
-        const textElements = document.querySelector(".typewriter-text");
-        let textIndex = 0;
-        let charcterIndex = 0;
-        function typeWriter() {
-            if (charcterIndex < texts[textIndex].length) {
-                textElements.innerHTML += texts[textIndex].charAt(charcterIndex);
-                charcterIndex++;
-                setTimeout(typeWriter, speed);
-            }
-            else {
-                setTimeout(eraseText, 1000)
-            }
-        }
-        function eraseText() {
-            if (textElements.innerHTML.length > 0) {
-                textElements.innerHTML = textElements.innerHTML.slice(0, -1);
-                setTimeout(eraseText, 50)
-            }
-            else {
-                textIndex = (textIndex + 1) % texts.length;
-                charcterIndex = 0;
-                setTimeout(typeWriter, 500)
-            }
-        }
-        window.onload = typeWriter
-    </script>
+
 </body>
 </html>

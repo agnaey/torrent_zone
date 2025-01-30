@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <title>TORRENT ZONE</title>
+    <style>
+        body{
+            background-color: black;
+            color: white;
+        }
+        
+        nav {
+            width: 100%;
+            height: 10vh;
+            position: -webkit-sticky;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background-color: inherit;
+        }
+
+        .nav-container {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+
+        .navbar-brand {
+            color: white;
+            font-size: 2rem;
+            font-weight: bold;
+        }
+
+        span {
+            color: #077b32;
+            text-shadow: 0 0 10px #077b32;
+        }
+
+
+        .nav-container .links {
+            display: flex;
+        }
+
+        .nav-link{
+            position: relative;
+            font-size: 1.2rem;
+            color: white;
+            margin: 0 20px;
+            text-decoration: none;
+            font-weight: 550;
+            transition: 0.3s linear;
+        }
+
+        .navbar-nav .nav-link::before {
+  position: absolute;
+  content: "";
+  bottom: -3px;
+  left: 0;
+  width: 0%;
+  height: 3px;
+  background-color: #077b32;
+  transition: 0.2s linear;
+}
+
+.navbar-nav .nav-link:hover::before {
+  width: 100%;
+}
+
+.navbar-nav .nav-link:hover {
+  color: #077b32;
+}
+
+
+
+#container1 {
+            background-color: #2b2b2b;
+            padding: 20px;
+            border-radius: 20px;
+            width: 500px;
+            margin-top: 100px;
+            box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.2);
+        }
+        h2 {
+            text-align: center;
+            color: #ffffff;
+        }
+        label {
+            display: block;
+            margin-top: 10px;
+            color: #bbbbbb;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            background-color: #3a3a3a;
+            border: none;
+            color: white;
+            border-radius: 5px;
+        }
+        input[type="checkbox"] {
+            width: auto;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #3a3a3a;
+            border: none;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 15px;
+        }
+        button:hover {
+            background-color: #555;
+        }
+
+    </style>
+</head>
+<body>
+
+  <nav style="position: fixed;" class="navbar navbar-expand-sm mb-5">
+    <div class="nav-container container">
+      <a class="navbar-brand text-white" data-aos="zoom-in" data-aos-duration="1500" href="#">
+        <span>TORRENT</span> ZONE
+      </a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarNav"
+        aria-controls="navbarNav"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+        style="background-color: white;"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="100">
+            <a class="nav-link" href="#home">Home</a>
+          </li>
+          <li class="nav-item" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="200">
+            <a class="nav-link" href="../cart">cart</a>
+          </li>
+          <li class="nav-item" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="300">
+            <a class="nav-link" href="#">History</a>
+          </li>
+          <li class="nav-item" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="400">
+            <a class="nav-link" href="#">Contact</a>
+          </li>
+          <li class="nav-item" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="500">
+            <a class="nav-link" href="../logout"><span>Logout</span></a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  
+
+  <div id="container1" class="container mt-5">
+    <h2 class="mt-5">Add a New Game</h2>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <label>Game Title</label>
+        <input type="text" name="title" required>
+
+        <label>Description</label>
+        <textarea name="des" rows="3"></textarea>
+
+        <label>Genre</label>
+        <input type="text" name="genre" required>
+
+        <label>Developer</label>
+        <input type="text" name="developer" required>
+
+        <label>Release Date</label>
+        <input type="date" name="release_date" required>
+
+        <label>Game Cover Image</label>
+        <input type="file" name="image">
+
+        <label>Game Torrent File</label>
+        <input type="file" name="torrent">
+
+        <label>
+            <input type="checkbox" name="is_paid"> Paid Game
+        </label>
+
+        <label>Price (INR)</label>
+        <input type="number" name="price" step="0.01">
+
+        <button type="submit">Add Game</button>
+    </form>
+</div>
+
+
+  <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+  <script>
+      AOS.init({ offset: 0 });
+  </script>
+</body>
+</html>

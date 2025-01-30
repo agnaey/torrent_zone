@@ -19,7 +19,7 @@ class Game(models.Model):
     rating = models.FloatField(default=0.0)
 
     is_paid = models.BooleanField(default=False) 
-    price = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+    price = models.IntegerField()
 
     def __str__(self):
         return self.title
@@ -37,8 +37,10 @@ class GameRequirement(models.Model):
 class Cart(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     game = models.ForeignKey(Game, on_delete=models.CASCADE)
-    price = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
-    added_at = models.DateTimeField(auto_now_add=True)  
+    added_at = models.DateTimeField(auto_now_add=True) 
+    quantity = models.PositiveIntegerField(default=1)
+    def total_price(self):
+        return self.quantity * self.game.price 
 
 class Purchase(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
