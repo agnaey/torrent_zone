@@ -331,15 +331,15 @@
                 <a class="nav-link" href="../">Home</a>
               </li>
               <li class="nav-item" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="300">
-                <a class="nav-link" href="../cart">Cart</a>
+                <a class="nav-link" href="../add_game">Add Games</a>
               </li>
 
               <li class="nav-item" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="300">
-                <a class="nav-link" href="#">History</a>
+                <a class="nav-link" href="#">Report</a>
               </li>
-              <li class="nav-item" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="400">
+              <!-- <li class="nav-item" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="400">
                 <a class="nav-link" href="#">Contact</a>
-              </li>
+              </li> -->
               <li class="nav-item" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="500">
                 <a class="nav-link" href="../logout"><span>Logout</span></a>
               </li>
@@ -455,15 +455,18 @@
                 </p>
               </div>
               
-              <div class="d-grid gap-2 mt-3 mb-4">
+              <!-- <div class="d-grid gap-2 mt-3 mb-4">
                 {% if game.price == 0.00 %}
-                  <a href="{{ game.torrent.url }}" class="btn custom-button" download>Download Now</a>
+                  <a href="{{ game.torrent }}" class="btn custom-button" download>Download Now</a>
                 {% else %}
                   <button class=" btn custom-button">Buy Now</button>
                 {% endif %}
-              </div>
-              <a href="https://www.utorrent.com/downloads/win/" class="btn custom-outline-button border">Download Torrent</a>
-              <a href="../add_to_cart/{{ game.id }}" class="btn custom-outline-button border mt-3">Add to Cart</a>
+              </div> -->
+              <a href="#" class="btn custom-outline-button border mt-3">Edit</a>
+              <a href="#" class="btn custom-outline-button border mt-3">Edit Requirements</a>
+              <a href="#" class="btn custom-outline-button border mt-3">Delete</a>
+              <a href="#" class="btn custom-outline-button border mt-3">Delete Requirements</a>
+
               </div>
               <div class="divider"></div>
               <div class="small">

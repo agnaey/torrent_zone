@@ -8,9 +8,12 @@ urlpatterns = [
 
     # -------------admin------------------------------
     path('admin_home', views.admin_home, name='admin_home'),
+    path('game_detail/<id>',views.game_details),
+
     path('add_game', views.add_game, name='add_game'),
     path('add_game_req/<id>', views.add_game_req, name='add_game_req'),
-
+    path('edit_game/<id>',views.edit_game),
+    path('edit_req/<id>',views.edit_req),
 
     # ----------user------------------------------
     path('index', views.index, name='index'),

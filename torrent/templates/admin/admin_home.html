@@ -40,6 +40,11 @@
             font-weight: bold;
         }
 
+        #navbarNav{
+    background-color: black;
+}
+
+
         span {
             color: #077b32;
             text-shadow: 0 0 10px #077b32;
@@ -166,7 +171,7 @@
     </style>
 </head>
 <body>
-    <nav style="position: fixed;" class="navbar navbar-expand-sm">
+    <nav style="position: fixed;" class="navbar navbar-expand-lg">
         <div class="nav-container container">
           <a class="navbar-brand text-white" data-aos="zoom-in" data-aos-duration="1500" href="#">
             <span>TORRENT</span> ZONE
@@ -224,12 +229,11 @@
     <div class="container">
         <h2 id="trending">All Games</h2>
     
-        <!-- Loop through the games and create rows -->
         <div class="row">
-            {% for i in games|slice:":4" %}
-                <div class="col-12 col-md-3 mb-4">  <!-- Adjust the number of columns per row -->
+            {% for i in games %}
+                <div class="col-12 col-md-3 mb-4"> 
                     <div class="card" style="background-color: black; border: 1px solid #077b32; border-radius: 10px; box-shadow: 0 0 10px #077b32;">
-                        <a style="text-decoration: none;" href="../pro_detail/{{ i.id }}">
+                        <a style="text-decoration: none;" href="../game_detail/{{ i.id }}">
                             <img src="{{ i.image.url }}" class="card-img-top img-fluid" alt="{{ i.name }}">
                             <div class="card-body">
                                 <h5 class="card-title text-center" style="color: #fafafa; text-shadow: 0 0 5px #077b32;">{{ i.title }}</h5>
@@ -240,6 +244,17 @@
                                     ₹{{ i.price }}
                                     {% endif %}
                                 </p>
+                                <hr class="text-secondary">
+                                <div class="row">
+                                    <div class="row justify-content-center">
+                                        <div class="col-md-4 mt-3 d-flex justify-content-around text-center gap-5">
+                                            <a href="../game_detail/{{ i.id }}" class="btn btn-warning">Edit</a>
+                                            <a href="../delete_game/{{ i.id }}" class="btn btn-danger">Delete</a>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                                
                             </div>
                         </a>
                     </div>

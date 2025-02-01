@@ -61,7 +61,11 @@ def admin_home(req):
         return render(req,'admin/admin_home.html',{'games':games})
     else:
         return redirect(login)
-    
+
+def game_details(req,id):
+    game = Game.objects.get(pk=id)
+    return render(req, 'admin/game_details.html', {'game': game})    
+
 def add_game(req):
         if req.method == 'POST':
             title = req.POST['title']
@@ -128,12 +132,19 @@ def add_game_req(req, id):
             game_requirement.graphics = graphics
             game_requirement.save()
 
-        # Redirect to another page (e.g., game list or admin panel)
-        return redirect('admin_home')  # Change to your desired URL name
-
+        return redirect('admin_home')  
     return render(req, 'admin/add_req.html', {'game': game})
 
+def edit_game(req,id):
+    game=Game.objects.get(pk=id)
+    # return redirect('admin_home')
+    return render(req, 'admin/edit_game.html', {'game': game})
 
+def edit_req(req,id):
+    game=Game.objects.get(pk=id)
+    return render(req,'admin.edit_req.html',{'game':game})
+
+    
 
 # --------------user--------------------
 
