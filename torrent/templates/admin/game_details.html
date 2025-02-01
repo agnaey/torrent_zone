@@ -302,7 +302,10 @@
         button:hover {
             background-color: #0056b3;
         }
-
+        /* #img {
+            width: auto;
+            height: 350px;
+        } */
 
 
     </style>
@@ -353,7 +356,7 @@
           <!-- Left Section -->
           <div class="col-md-8">
             <div class="ratio ratio-16x9 d-flex justify-content-center align-items-center rounded">
-            <img src="{{ game.image.url }}" style="border-radius: 10px;" alt="">              
+            <img id="img" src="{{ game.image.url }}" style="border-radius: 10px;" alt="">              
             </div>
       
             <!-- New Section -->
@@ -462,10 +465,10 @@
                   <button class=" btn custom-button">Buy Now</button>
                 {% endif %}
               </div> -->
-              <a href="#" class="btn custom-outline-button border mt-3">Edit</a>
-              <a href="#" class="btn custom-outline-button border mt-3">Edit Requirements</a>
-              <a href="#" class="btn custom-outline-button border mt-3">Delete</a>
-              <a href="#" class="btn custom-outline-button border mt-3">Delete Requirements</a>
+              <a href="../edit_game/{{ game.id }}" class="btn custom-outline-button border mt-3">Edit</a>
+              <a href="../edit_req/{{ game.id }}" class="btn custom-outline-button border mt-3">Edit Requirements</a>
+              <a href="../delete_game/{{ game.id }}" class="btn custom-outline-button border mt-3">Delete</a>
+              <a href="../delete_req/{{ game.id }}" class="btn custom-outline-button border mt-3">Delete Requirements</a>
 
               </div>
               <div class="divider"></div>
@@ -479,7 +482,30 @@
               <div class="divider"></div>
               <div class="d-flex justify-content-between">
                 <!-- <button class="btn btn-link text-white text-decoration-none">Share</button> -->
-                <button class="btn btn-link text-white text-decoration-none">Report</button>
+                <button class="btn btn-link text-white text-decoration-none" data-bs-toggle="modal" data-bs-target="#reportModal">Report</button>
+
+
+<!-- Report -->
+<div class="modal fade" id="reportModal" tabindex="-1" aria-labelledby="reportModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title" id="reportModalLabel">Report Issue</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+              <form method="POST" action="">
+                  {% csrf_token %}
+                  <div class="mb-3">
+                      <label for="report_reason" class="form-label">Reason</label>
+                      <textarea class="form-control" id="report_reason" name="reason" required></textarea>
+                  </div>
+                  <button type="submit" class="btn btn-primary">Submit Report</button>
+              </form>
+          </div>
+      </div>
+  </div>
+</div>
               </div>
             </div>
 
@@ -500,13 +526,7 @@
               {% else %}
               <p>No reviews available for this game.</p>
               {% endif %}
-              <h2>Add Your Review</h2>
-              <form class="review-form">
-                <input type="text" placeholder="Your Name" required>
-                <input type="number" placeholder="Rating (1-10)" required min="1" max="10">
-                <textarea placeholder="Your Review" required></textarea>
-                <button type="submit">Submit Review</button>
-              </form>
+
             </div>
 
           </div>

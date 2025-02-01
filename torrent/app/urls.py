@@ -14,6 +14,8 @@ urlpatterns = [
     path('add_game_req/<id>', views.add_game_req, name='add_game_req'),
     path('edit_game/<id>',views.edit_game),
     path('edit_req/<id>',views.edit_req),
+    path('delete_game/<id>',views.delete_game),
+    path('delete_req/<id>',views.delete_req, name='delete_req'),
 
     # ----------user------------------------------
     path('index', views.index, name='index'),

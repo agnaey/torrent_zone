@@ -1,9 +1,10 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect,get_object_or_404
 from django.contrib.auth.decorators import login_required
 from .models import *
+import os
 from django.contrib import messages
 from django.contrib.auth import authenticate,login as auth_login,logout as auth_logout
-
+from django.conf import settings
 # Create your views here.
 
 
@@ -64,7 +65,12 @@ def admin_home(req):
 
 def game_details(req,id):
     game = Game.objects.get(pk=id)
-    return render(req, 'admin/game_details.html', {'game': game})    
+    try:
+        requ=GameRequirement.objects.get(game=game)
+    except GameRequirement.DoesNotExist:
+        requ=None
+
+    return render(req, 'admin/game_details.html', {'game': game,'requ':requ})    
 
 def add_game(req):
         if req.method == 'POST':
@@ -135,14 +141,92 @@ def add_game_req(req, id):
         return redirect('admin_home')  
     return render(req, 'admin/add_req.html', {'game': game})
 
-def edit_game(req,id):
-    game=Game.objects.get(pk=id)
-    # return redirect('admin_home')
+def edit_game(req, id):
+    game = Game.objects.get(pk=id)
+    
+    if req.method == 'POST':
+        game.title = req.POST.get('title', game.title)
+        game.des = req.POST.get('des', game.des)
+        game.genre = req.POST.get('genre', game.genre)
+        game.developer = req.POST.get('developer', game.developer)
+        game.release_date = req.POST.get('release_date', game.release_date)
+        
+        if 'image' in req.FILES:
+            game.image = req.FILES['image']
+        if 'torrent' in req.FILES:
+            game.torrent = req.FILES['torrent']
+        
+        game.is_paid = 'is_paid' in req.POST
+        price = req.POST.get('price')
+        try:
+            game.price = int(price) if price else 0
+        except ValueError:
+            game.price = 0
+
+        game.save()
+        return redirect(f'../edit_req/{game.id}')
     return render(req, 'admin/edit_game.html', {'game': game})
 
-def edit_req(req,id):
-    game=Game.objects.get(pk=id)
-    return render(req,'admin.edit_req.html',{'game':game})
+
+def edit_req(req, id):
+    game = Game.objects.get(pk=id)
+    try:
+        requirement = GameRequirement.objects.get(game=game)
+    except GameRequirement.DoesNotExist:
+        requirement = None
+
+    if req.method == 'POST':
+        os_value = req.POST.get('os')
+        processor_value = req.POST.get('processor')
+        memory_value = req.POST.get('memory')
+        graphics_value = req.POST.get('graphics')
+
+        if requirement:
+            requirement.os = os_value
+            requirement.processor = processor_value
+            requirement.memory = memory_value
+            requirement.graphics = graphics_value
+            requirement.save()
+        else:
+            requirement = GameRequirement.objects.create(
+                game=game,
+                os=os_value,
+                processor=processor_value,
+                memory=memory_value,
+                graphics=graphics_value
+            )
+        return redirect('admin_home')
+
+    return render(req, 'admin/edit_req.html', {'game': game, 'requ': requirement})
+
+
+
+def delete_game(req, id):
+    game = get_object_or_404(Game, pk=id)
+
+    torrent_path = os.path.join(settings.MEDIA_ROOT, str(game.torrent))
+    image_path = os.path.join(settings.MEDIA_ROOT, str(game.image))
+
+    # Delete files if they exist
+    if os.path.exists(torrent_path):
+        os.remove(torrent_path)
+
+    if os.path.exists(image_path):
+        os.remove(image_path)
+
+    # Delete game from database
+    game.delete()
+
+    return redirect('admin_home')
+
+def delete_req(req, id):
+    game = Game.objects.get(pk=id)
+    try:
+        requirement = GameRequirement.objects.get(game=game)
+        requirement.delete()
+    except GameRequirement.DoesNotExist:
+        pass
+    return redirect('admin_home')
 
     
 

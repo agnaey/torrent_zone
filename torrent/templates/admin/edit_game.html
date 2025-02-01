@@ -176,32 +176,32 @@
     <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         <label>Game Title</label>
-        <input type="text" name="title" required>
+        <input type="text" name="title" value="{{ game.title }}" required>
 
         <label>Description</label>
-        <textarea name="des" rows="3"></textarea>
+        <textarea name="des" rows="3" value="{{ game.des }}"></textarea>
 
         <label>Genre</label>
-        <input type="text" name="genre" required>
+        <input type="text" name="genre" required value="{{ game.genre }}">
 
         <label>Developer</label>
-        <input type="text" name="developer" required>
+        <input type="text" name="developer" value="{{ game.developer }}" required>
 
         <label>Release Date</label>
-        <input type="date" name="release_date" required>
+        <input type="date" name="release_date" value="{{ game.release_date|date:'Y-m-d' }}" required>
 
-        <label>Game Cover Image</label>
+        <img src="{{game.image.url}}" alt="" style="width: 290px;height: 200px; margin-top: 10px;"><br>
+        <label>Cover Image</label>
         <input type="file" name="image">
 
-        <label>Game Torrent File</label>
+        <img src="{{game.torrent.url}}" alt="" style=" margin-top: 10px;"><br>
+        <label>Torrent File</label>
         <input type="file" name="torrent">
 
-        <label>
-            <input type="checkbox" name="is_paid"> Paid Game
-        </label>
-
+        <label>Paid Game:</label>
+        <input type="checkbox" name="is_paid" {% if game.is_paid %}checked{% endif %} /><br>
         <label>Price (INR)</label>
-        <input type="number" name="price" step="0.01">
+        <input type="number" name="price" value="{{ game.price }}" step="0.01">
 
         <button type="submit">Edit Requrement</button>
     </form>

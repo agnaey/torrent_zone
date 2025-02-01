@@ -183,16 +183,16 @@
         <form method="POST">
             {% csrf_token %}
             <label>Operating System</label>
-            <input type="text" name="os" required>
+            <input type="text" name="os" value="{{ requ.os }}" required>
 
             <label>Processor</label>
-            <input type="text" name="processor" required>
+            <input type="text" name="processor" value="{{ requ.processor }}" required>
 
             <label>Memory (RAM)</label>
-            <input type="text" name="memory" required>
+            <input type="text" name="memory" value="{{ requ.memory }}" required>
 
             <label>Graphics Card</label>
-            <input type="text" name="graphics" required>
+            <input type="text" name="graphics" value="{{ requ.graphics }}" required>
 
             <button type="submit">Save Requirements</button>
         </form>
