@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+{% block content %}
+<h1>My Activity</h1>
+
+<h2>Purchased Games</h2>
+{% if purchases %}
+    <ul>
+    {% for purchase in purchases %}
+        <li>{{ purchase.game.title }} - Purchased on: {{ purchase.purchase_date|date:"SHORT_DATETIME_FORMAT" }}</li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>You haven't purchased any games yet.</p>
+{% endif %}
+
+<h2>Download History</h2>
+{% if downloads %}
+    <ul>
+    {% for download in downloads %}
+        <li>{{ download.game.title }} - Downloaded on: {{ download.downloaded_at|date:"SHORT_DATETIME_FORMAT" }}</li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>You haven't downloaded any free games yet.</p>
+{% endif %}
+{% endblock %}
+
+</body>
+</html>

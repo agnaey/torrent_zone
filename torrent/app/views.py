@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect,get_object_or_404
 from django.contrib.auth.decorators import login_required
 from .models import *
 import os
+from django.http import FileResponse, Http404
+from django.db.models import Avg
 from django.contrib import messages
 from django.contrib.auth import authenticate,login as auth_login,logout as auth_logout
 from django.conf import settings
@@ -228,6 +230,7 @@ def delete_req(req, id):
         pass
     return redirect('admin_home')
 
+
     
 
 # --------------user--------------------
@@ -245,11 +248,28 @@ def sec(req,id):
         requ = None 
 
     try:
-        review = Review.objects.get(game=game)
+        review = Review.objects.filter(game=game)
     except Review.DoesNotExist:
         review = None
+    reviews = Review.objects.filter(game=game)
+    total_reviews = reviews.count()
+
+    average_rating = reviews.aggregate(Avg('rating'))['rating__avg'] or 0
+
+
+    my_review = Review.objects.filter(game=game, user=req.user).first() if req.user.is_authenticated else None
     
-    return render(req,'user/sec.html',{'game':game,'requ':requ,'review':review})
+    
+    context = {
+        'game': game,
+        'requ': requ,
+        'reviews': reviews,
+        'my_review': my_review,
+        'total_reviews': total_reviews,
+        'average_rating': round(average_rating, 1),
+    }
+    
+    return render(req,'user/sec.html',context)
 
 @login_required
 def add_to_cart(request, id):
@@ -270,3 +290,62 @@ def remove_cart(request, id):
     cart = Cart.objects.get(id=id)
     cart.delete()
     return redirect(view_cart)
+
+def report_game(request, id):
+    game = get_object_or_404(Game, id=id)
+
+    if request.method == "POST":
+        issue = request.POST.get("issue")
+        if not issue:
+            return redirect('sec', id=id)
+        Report.objects.create(user=request.user, game=game, issue=issue)
+        return redirect('sec', id=id)
+    
+    return redirect(sec, id=id)
+
+def add_review(request, id):
+    if request.method == "POST":
+        review_text = request.POST.get('comment')
+        rating = request.POST.get('rating')
+
+        if not review_text:
+            return redirect('sec', id=id)
+        game = get_object_or_404(Game, id=id)
+        Review.objects.create(user=request.user, game=game, comment=review_text, rating=rating or 0)
+        return redirect('sec', id=id)
+    
+    return redirect('sec', id=id)
+
+def delete_review(request,id):
+    review = get_object_or_404(Review, id=id, user=request.user)
+    review.delete()
+    return redirect('sec', id=review.game.id)
+
+
+def view_review(request, id):
+    game = get_object_or_404(Game, id=id)
+    reviews = Review.objects.filter(game=game)[::-1]
+    return render(request, 'user/all_reviews.html', {'game': game, 'reviews': reviews})
+
+def buy_game(request, id):
+    game = get_object_or_404(Game, pk=id)
+    if game.price == 0.00:
+        DownloadHistory.objects.create(user=request.user, game=game)
+    else:
+        Purchase.objects.create(user=request.user, game=game)
+    file_path = game.torrent.path 
+    
+    if os.path.exists(file_path):
+        response = FileResponse(open(file_path, 'rb'), as_attachment=True, filename=os.path.basename(file_path))
+        return response
+    else:
+        raise Http404("File not found.")
+    
+def history(request):
+    purchases = Purchase.objects.filter(user=request.user)
+    downloads = DownloadHistory.objects.filter(user=request.user)
+    context = {
+        'purchases': purchases,
+        'downloads': downloads,
+    }
+    return render(request, 'user/history.html', context)

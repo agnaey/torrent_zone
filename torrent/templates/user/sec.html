@@ -1,382 +1,407 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-    <title>TORRENT ZONE</title>
-    <style>
-        body{
-            background-color: black;
-            color: white;
-        }
-        
-        nav {
-            width: 100%;
-            height: 10vh;
-            position: -webkit-sticky;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            background-color: inherit;
-        }
+  <title>TORRENT ZONE</title>
+  <style>
+    body {
+      background-color: black;
+      color: white;
+    }
 
-        .nav-container {
-            width: 100%;
-            height: 100%;
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-        }
+    nav {
+      width: 100%;
+      height: 10vh;
+      position: -webkit-sticky;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background-color: inherit;
+    }
 
-        .navbar-brand {
-            color: white;
-            font-size: 2rem;
-            font-weight: bold;
-        }
+    .nav-container {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+    }
 
-        span {
-            color: #077b32;
-            text-shadow: 0 0 10px #077b32;
-        }
+    .navbar-brand {
+      color: white;
+      font-size: 2rem;
+      font-weight: bold;
+    }
 
-
-        .nav-container .links {
-            display: flex;
-        }
-
-        .nav-link{
-            position: relative;
-            font-size: 1.2rem;
-            color: white;
-            margin: 0 20px;
-            text-decoration: none;
-            font-weight: 550;
-            transition: 0.3s linear;
-        }
-
-        .navbar-nav .nav-link::before {
-  position: absolute;
-  content: "";
-  bottom: -3px;
-  left: 0;
-  width: 0%;
-  height: 3px;
-  background-color: #077b32;
-  transition: 0.2s linear;
-}
-
-.navbar-nav .nav-link:hover::before {
-  width: 100%;
-}
-
-.navbar-nav .nav-link:hover {
-  color: #077b32;
-}
-        section {
-            width: 100%;
-            height: 90vh;
-        }
-
-        .main-container {
-            width: 100%;
-            height: 100%;
-            display: flex;
-            justify-content: space-evenly;
-            align-items: center;
-        }
-
-        .main-container .image {
-            width: 500px;
-            height: 80vh;
-            border-radius: 100%;
-            overflow: hidden;
-            box-shadow: 0 0 50px #077b32;
-        }
-        .main-container .content {
-            color: white;
-            width: 70%;
-            text-align: center;
-            min-height: 100px;
-        }
-
-        .content h1 {
-            font-size: clamp(1rem, 1rem + 5vw, 1.8rem);
-        }
-
-        .content h1 span {
-            color: #077b32;
-            text-shadow: 0 0 10px #077b32;
-        }
-
-        .content .typewriter {
-            font-size: clamp(1rem, 1rem + 5vw, 2.5rem);
-            margin-top: 20px;
-            margin-bottom: 20px;
-            font-weight: 600;
-        }
-
-        .content .typewriter-text {
-            margin-top: 20px;
-            color: #077b32;
-            text-shadow: 0 0 10px #077b32;
-        }
-        #button {
-            text-decoration: none;
-            padding: 20px 70px;
-            margin-top: 30px;
-            margin: 30px;
-            background-color: #D3D3D3;
-            color: black;
-            border: none;
-            outline: none;
-            font-size: 120%;
-            font-weight: 700;
-            border-radius: 5px;
-            transition: 0.2s linear;
-        }
-
-        #button:hover {
-            scale: 1.1;
-            color: #D3D3D3;
-            border: 2px solid #D3D3D3;
-            background-color: transparent;
-            font-weight: 700;
-            box-shadow: 0 0 40px #D3D3D3;
-        }
-        .card-img-top{
-            height: 260px;
-            object-fit: cover;
-        }
+    span {
+      color: #077b32;
+      text-shadow: 0 0 10px #077b32;
+    }
 
 
-        .custom-green {
-          background-color: #077b32;
-        }
-        .custom-card {
-          background-color: rgba(0, 0, 0, 0.5);
-          color: white;
-          border: none;
-        }
-        .custom-button {
-          background-color: #077b32;
-          color: black;
-        }
-        .custom-button:hover {
-          background-color: #065f29;
-        }
-        .custom-outline-button {
-          border-color: rgb(247, 6, 6);
-          color: white;
-        }
-        .custom-outline-button:hover {
-          background-color: #2a2a2a;
-          color: white;
-        }
-        .thumbnail {
-          width: 80px;
-          height: 50px;
-          background-color: #077b32;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          color: white;
-          font-size: 14px;
-          border-radius: 5px;
-        }
-        .divider {
-          border-top: 1px solid gray;
-          margin: 20px 0;
-        }
-        .system-requirements {
-  background-color: #1c1c1c;
-  color: #ffffff;
-  padding: 20px;
-  border-radius: 8px;
-  max-width: 800px;
-  margin: 0 auto;
-  font-family: Arial, sans-serif;
-}
+    .nav-container .links {
+      display: flex;
+    }
 
-.system-requirements .title {
-  text-align: center;
-  margin-bottom: 20px;
-  font-size: 1.8rem;
-  font-weight: bold;
-}
+    .nav-link {
+      position: relative;
+      font-size: 1.2rem;
+      color: white;
+      margin: 0 20px;
+      text-decoration: none;
+      font-weight: 550;
+      transition: 0.3s linear;
+    }
 
-.requirements-container {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
+    .navbar-nav .nav-link::before {
+      position: absolute;
+      content: "";
+      bottom: -3px;
+      left: 0;
+      width: 0%;
+      height: 3px;
+      background-color: #077b32;
+      transition: 0.2s linear;
+    }
 
-.requirement-column {
-  background-color: #2b2b2b;
-  padding: 15px;
-  border-radius: 6px;
-}
+    .navbar-nav .nav-link:hover::before {
+      width: 100%;
+    }
 
-.requirement-column .platform {
-  font-size: 1.5rem;
-  border-bottom: 1px solid #3a3a3a;
-  padding-bottom: 10px;
-  margin-bottom: 10px;
-}
+    .navbar-nav .nav-link:hover {
+      color: #077b32;
+    }
 
-.requirement-section {
-  margin-bottom: 15px;
-}
+    section {
+      width: 100%;
+      height: 90vh;
+    }
 
-.requirement-section .section-title {
-  font-size: 1.2rem;
-  color: #77c14f;
-  margin-bottom: 10px;
-}
+    .main-container {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: space-evenly;
+      align-items: center;
+    }
 
-.requirement-list {
-  list-style: none;
-  padding: 0;
-}
+    .main-container .image {
+      width: 500px;
+      height: 80vh;
+      border-radius: 100%;
+      overflow: hidden;
+      box-shadow: 0 0 50px #077b32;
+    }
 
-.requirement-list li {
-  margin-bottom: 5px;
-}
+    .main-container .content {
+      color: white;
+      width: 70%;
+      text-align: center;
+      min-height: 100px;
+    }
 
-.language-support {
-  background-color: #2b2b2b;
-  padding: 15px;
-  border-radius: 6px;
-}
+    .content h1 {
+      font-size: clamp(1rem, 1rem + 5vw, 1.8rem);
+    }
 
-.language-support h4 {
-  color: #77c14f;
-  margin-bottom: 10px;
-}
+    .content h1 span {
+      color: #077b32;
+      text-shadow: 0 0 10px #077b32;
+    }
 
-.footer-note {
-  text-align: center;
-  font-size: 0.85rem;
-  color: #888888;
-}
+    .content .typewriter {
+      font-size: clamp(1rem, 1rem + 5vw, 2.5rem);
+      margin-top: 20px;
+      margin-bottom: 20px;
+      font-weight: 600;
+    }
 
-.footer-note .privacy-link {
-  color: #77c14f;
-  text-decoration: none;
-  margin-top: 10px;
-  display: inline-block;
-}
-.card {
-            background-color: #1e1e1e;
-            padding: 15px;
-            margin: 10px 0;
-            border-radius: 8px;
-        }
-        .rating {
-            color: rgb(253, 253, 253);
-            font-weight: bold;
-        }
-        .review-form {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-        input, textarea, button {
-            padding: 10px;
-            border-radius: 5px;
-            border: none;
-        }
-        input, textarea {
-            background-color: #333;
-            color: white;
-        }
-        button {
-            background-color: #007bff;
-            color: white;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #0056b3;
-        }
+    .content .typewriter-text {
+      margin-top: 20px;
+      color: #077b32;
+      text-shadow: 0 0 10px #077b32;
+    }
+
+    #button {
+      text-decoration: none;
+      padding: 20px 70px;
+      margin-top: 30px;
+      margin: 30px;
+      background-color: #D3D3D3;
+      color: black;
+      border: none;
+      outline: none;
+      font-size: 120%;
+      font-weight: 700;
+      border-radius: 5px;
+      transition: 0.2s linear;
+    }
+
+    #button:hover {
+      scale: 1.1;
+      color: #D3D3D3;
+      border: 2px solid #D3D3D3;
+      background-color: transparent;
+      font-weight: 700;
+      box-shadow: 0 0 40px #D3D3D3;
+    }
+
+    .card-img-top {
+      height: 260px;
+      object-fit: cover;
+    }
 
 
+    .custom-green {
+      background-color: #077b32;
+    }
 
-    </style>
+    .custom-card {
+      background-color: rgba(0, 0, 0, 0.5);
+      color: white;
+      border: none;
+    }
+
+    .custom-button {
+      background-color: #077b32;
+      color: black;
+    }
+
+    .custom-button:hover {
+      background-color: #065f29;
+    }
+
+    .custom-outline-button {
+      border-color: rgb(247, 6, 6);
+      color: white;
+    }
+
+    .custom-outline-button:hover {
+      background-color: #2a2a2a;
+      color: white;
+    }
+
+    .thumbnail {
+      width: 80px;
+      height: 50px;
+      background-color: #077b32;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      font-size: 14px;
+      border-radius: 5px;
+    }
+
+    .divider {
+      border-top: 1px solid gray;
+      margin: 20px 0;
+    }
+
+    .system-requirements {
+      background-color: #1c1c1c;
+      color: #ffffff;
+      padding: 20px;
+      border-radius: 8px;
+      max-width: 800px;
+      margin: 0 auto;
+      font-family: Arial, sans-serif;
+    }
+
+    .system-requirements .title {
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 1.8rem;
+      font-weight: bold;
+    }
+
+    .requirements-container {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .requirement-column {
+      background-color: #2b2b2b;
+      padding: 15px;
+      border-radius: 6px;
+    }
+
+    .requirement-column .platform {
+      font-size: 1.5rem;
+      border-bottom: 1px solid #3a3a3a;
+      padding-bottom: 10px;
+      margin-bottom: 10px;
+    }
+
+    .requirement-section {
+      margin-bottom: 15px;
+    }
+
+    .requirement-section .section-title {
+      font-size: 1.2rem;
+      color: #77c14f;
+      margin-bottom: 10px;
+    }
+
+    .requirement-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    .requirement-list li {
+      margin-bottom: 5px;
+    }
+
+    .language-support {
+      background-color: #2b2b2b;
+      padding: 15px;
+      border-radius: 6px;
+    }
+
+    .language-support h4 {
+      color: #77c14f;
+      margin-bottom: 10px;
+    }
+
+    .footer-note {
+      text-align: center;
+      font-size: 0.85rem;
+      color: #888888;
+    }
+
+    .footer-note .privacy-link {
+      color: #77c14f;
+      text-decoration: none;
+      margin-top: 10px;
+      display: inline-block;
+    }
+
+    .card {
+      background-color: #1e1e1e;
+      padding: 15px;
+      margin: 10px 0;
+      border-radius: 8px;
+    }
+
+    .rating {
+      color: rgb(253, 253, 253);
+      font-weight: bold;
+    }
+
+    .review-form {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    input,
+    textarea,
+    button {
+      padding: 10px;
+      border-radius: 5px;
+      border: none;
+    }
+
+    input,
+    textarea {
+      background-color: #333;
+      color: white;
+    }
+
+    button {
+      background-color: #007bff;
+      color: white;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    .modal-content {
+      background-color: #1e1e1e;
+      padding: 15px;
+      border-radius: 8px;
+    }
+
+    .form-control {
+      background-color: #333;
+      color: white;
+      height: 200px;
+    }
+  </style>
 </head>
+
 <body>
-    <nav style="position: fixed;" class="navbar navbar-expand-lg">
-        <div class="nav-container container">
-          <a class="navbar-brand text-white" data-aos="zoom-in" data-aos-duration="1500" href="#">
-            <span>TORRENT</span> ZONE
-          </a>
-          <button
-            class="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarNav"
-            aria-controls="navbarNav"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-            style="background-color: white;"
-          >
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse justify-content-end " style="background-color: black;" id="navbarNav">
-            <ul class="navbar-nav">
-              <li class="nav-item" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="100">
-                <a class="nav-link" href="../">Home</a>
-              </li>
-              <li class="nav-item" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="300">
-                <a class="nav-link" href="../cart">Cart</a>
-              </li>
+  <nav style="position: fixed;" class="navbar navbar-expand-lg">
+    <div class="nav-container container">
+      <a class="navbar-brand text-white" data-aos="zoom-in" data-aos-duration="1500" href="#">
+        <span>TORRENT</span> ZONE
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation" style="background-color: white;">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-end " style="background-color: black;" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="100">
+            <a class="nav-link" href="../">Home</a>
+          </li>
+          <li class="nav-item" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="300">
+            <a class="nav-link" href="../cart">Cart</a>
+          </li>
 
-              <li class="nav-item" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="300">
-                <a class="nav-link" href="#">History</a>
-              </li>
-              <li class="nav-item" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="400">
-                <a class="nav-link" href="#">Contact</a>
-              </li>
-              <li class="nav-item" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="500">
-                <a class="nav-link" href="../logout"><span>Logout</span></a>
-              </li>
-            </ul>
-          </div>
+          <li class="nav-item" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="300">
+            <a class="nav-link" href="#">History</a>
+          </li>
+          <li class="nav-item" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="400">
+            <a class="nav-link" href="#">Contact</a>
+          </li>
+          <li class="nav-item" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="500">
+            <a class="nav-link" href="../logout"><span>Logout</span></a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container py-5 mt-5">
+    <div class="row g-5">
+      <!-- Left Section -->
+      <div class="col-md-8">
+        <div class="ratio ratio-16x9 d-flex justify-content-center align-items-center rounded">
+          <img src="{{ game.image.url }}" style="border-radius: 10px;" alt="">
         </div>
-      </nav>
 
-      <div class="container py-5 mt-5">
-        <div class="row g-5">
-          <!-- Left Section -->
-          <div class="col-md-8">
-            <div class="ratio ratio-16x9 d-flex justify-content-center align-items-center rounded">
-            <img src="{{ game.image.url }}" style="border-radius: 10px;" alt="">              
-            </div>
-      
-            <!-- New Section -->
-            <div class="mt-5">
-              <h5 class="mb-3">{{ game.title }}</h5>
-              <p class="text-white">
-                {{ game.des }}
-              </p>
-              <div class="row">
-                <div class="col-md-6">
-                  <h6>Genres</h6>
-                  <span class="badge bg-secondary">{{ game.genre }}</span>
-                  <!-- <span class="badge bg-secondary">City Builder</span>
+        <!-- New Section -->
+        <div class="mt-5">
+          <h5 class="mb-3">{{ game.title }}</h5>
+          <p class="text-white">
+            {{ game.des }}
+          </p>
+          <div class="row">
+            <div class="col-md-6">
+              <h6>Genres</h6>
+              <span class="badge bg-secondary">{{ game.genre }}</span>
+              <!-- <span class="badge bg-secondary">City Builder</span>
                   <span class="badge bg-secondary">Narration</span> -->
-                </div>
-                <div class="col-md-6">
-                  <h6>Features</h6>
-                  <span class="badge bg-secondary">Single Player</span>
-                  <span class="badge bg-secondary">Multi Player</span>
+            </div>
+            <div class="col-md-6">
+              <h6>Features</h6>
+              <span class="badge bg-secondary">Single Player</span>
+              <span class="badge bg-secondary">Multi Player</span>
 
-                </div>
-              </div>
-              <!-- <div class="mt-4">
+            </div>
+          </div>
+          <!-- <div class="mt-4">
                 <h6>Build a perfect city</h6>
                 <p>
                   You will have a deck of cards with buildings at your disposal. Build skyscrapers, parks, residential districts, and transport highways. It's up to you to decide what the ideal metropolis should look like.
@@ -387,134 +412,195 @@
                   Four factions are fighting for control of the city: capitalists, aristocrats, politicians, and the common people. They will do anything to bend the others to their will, and every decision you make tips the scales. Play the role of arbiter, meeting everyone's needs equally.
                 </p>
               </div> -->
-            </div>
-      
-            <!-- System Requirements -->
-            <div class="system-requirements mt-5">
-              <h2 class="title"> System Requirements</h2>
-              <div class="requirements-container">
-                <div class="requirement-column">
-                  <h3 class="platform">Windows</h3>
-                  <div class="requirement-section">
-                    {% if requ %}
-                    <h4 class="section-title">Minimum</h4>
-                    <ul class="requirement-list">
-                      <li><strong>OS version:</strong>{{ requ.os }}</li>
-                      <li><strong>CPU:</strong> {{ requ.processor }}</li>
-                      <li><strong>Memory:</strong> {{ requ.memory }}</li>
-                      <li><strong>GPU:</strong> {{ requ.graphics }}</li>
-                    </ul>
-                    {% else %}
-                    <p>No requirements available for this game.</p>
-                    {% endif %}
-                  </div>
-                  <div class="requirement-section">
-                    {% if requ %}
-                    <h4 class="section-title">Recommended</h4>
-                    <ul class="requirement-list ">
-                      <li><strong>OS version:</strong> {{ requ.os }}</li>
-                      <li><strong>CPU:</strong>{{ requ.processor }}</li>
-                      <li><strong>Memory:</strong> {{ requ.memory }}</li>
-                      <li><strong>GPU:</strong> {{ requ.graphics }}</li>
-                    </ul>
-                    {% else %}
-                    <p>No recommendation available for this game.</p>
-                    {% endif %}
-                  </div>
-                </div>
-                <div class="language-support">
-                  <h4>Languages Supported</h4>
-                  <p><strong>Audio:</strong> English</p>
-                  <p>
-                    <strong>Text:</strong> English, German, Chinese (Simplified), French, Spanish (Spain), Spanish (Latin America), Japanese, Russian, Italian, Polish, Portuguese (Brazil), Norwegian
-                  </p>
-                </div>
-                <div class="footer-note">
-                  <!-- <p>Dustborn © 2023 Red Thread Games AS. All rights reserved. Published by Quantic Dream.</p> -->
-                  <a href="#" class="privacy-link">Privacy Policy</a>
-                </div>
-              </div>
-            </div>
-          </div>
-      
-          <!-- Right Section -->
-          <div class="col-md-4">
-            <div class="card custom-card p-3">
-              <h1 class="h4">{{ game.title }}</h1>
-              <p class="text-white small mt-2">
-              {{ game.description }}
+        </div>
 
-              </p>
-              <div class="mt-3">
-                <p class="h4 text-success">Price: 
-                  {% if game.price == 0.00 %}
-                    Free
-                  {% else %}
-                    ₹{{ game.price }}
-                  {% endif %}
-                </p>
-              </div>
-              
-              <div class="d-grid gap-2 mt-3 mb-4">
-                {% if game.price == 0.00 %}
-                  <a href="{{ game.torrent.url }}" class="btn custom-button" download>Download Now</a>
+        <!-- System Requirements -->
+        <div class="system-requirements mt-5">
+          <h2 class="title"> System Requirements</h2>
+          <div class="requirements-container">
+            <div class="requirement-column">
+              <h3 class="platform">Windows</h3>
+              <div class="requirement-section">
+                {% if requ %}
+                <h4 class="section-title">Minimum</h4>
+                <ul class="requirement-list">
+                  <li><strong>OS version:</strong>{{ requ.os }}</li>
+                  <li><strong>CPU:</strong> {{ requ.processor }}</li>
+                  <li><strong>Memory:</strong> {{ requ.memory }}</li>
+                  <li><strong>GPU:</strong> {{ requ.graphics }}</li>
+                </ul>
                 {% else %}
-                  <button class=" btn custom-button">Buy Now</button>
+                <p>No requirements available for this game.</p>
                 {% endif %}
               </div>
-              <a href="https://www.utorrent.com/downloads/win/" class="btn custom-outline-button border">Download Torrent</a>
-              <a href="../add_to_cart/{{ game.id }}" class="btn custom-outline-button border mt-3">Add to Cart</a>
-              </div>
-              <div class="divider"></div>
-              <div class="small">
-                <p>Epic Rewards: <span class="text-white">Earn 5% Back</span></p>
-                <p>Refund Type: <span class="text-white">Self-Refundable</span></p>
-                <p>Developer: <span class="text-white">{{ game.developer }}</span></p>
-                <p>Release Date: <span class="text-white">{{ game.date }}</span></p>
-                <p>Platform: <span class="text-white">Windows</span></p>
-              </div>
-              <div class="divider"></div>
-              <div class="d-flex justify-content-between">
-                <!-- <button class="btn btn-link text-white text-decoration-none">Share</button> -->
-                <button class="btn btn-link text-white text-decoration-none">Report</button>
+              <div class="requirement-section">
+                {% if requ %}
+                <h4 class="section-title">Recommended</h4>
+                <ul class="requirement-list ">
+                  <li><strong>OS version:</strong> {{ requ.os }}</li>
+                  <li><strong>CPU:</strong>{{ requ.processor }}</li>
+                  <li><strong>Memory:</strong> {{ requ.memory }}</li>
+                  <li><strong>GPU:</strong> {{ requ.graphics }}</li>
+                </ul>
+                {% else %}
+                <p>No recommendation available for this game.</p>
+                {% endif %}
               </div>
             </div>
-
-            <div class="col-md-8">
-              <h2>Critic Reviews</h2>
-              {% if review %}
-
-              <div class="row">
-                <div class="col-md-4">
-                  <div class="card">
-                    <h3 class="text-white">{{ review.user }}</h3>
-                    <p class="rating">{{ review.rating }} / 10</p>
-                    <p class="text-white">"{{ review.comment }}"</p>
-                    <small class="text-secondary d-block text-left">{{ review.created_at|date:"M d, Y" }}</small>
-                  </div>
-                </div>
-              </div>
-              {% else %}
-              <p>No reviews available for this game.</p>
-              {% endif %}
-              <h2>Add Your Review</h2>
-              <form class="review-form">
-                <input type="text" placeholder="Your Name" required>
-                <input type="number" placeholder="Rating (1-10)" required min="1" max="10">
-                <textarea placeholder="Your Review" required></textarea>
-                <button type="submit">Submit Review</button>
-              </form>
+            <div class="language-support">
+              <h4>Languages Supported</h4>
+              <p><strong>Audio:</strong> English</p>
+              <p>
+                <strong>Text:</strong> English, German, Chinese (Simplified), French, Spanish (Spain), Spanish (Latin
+                America), Japanese, Russian, Italian, Polish, Portuguese (Brazil), Norwegian
+              </p>
             </div>
-
+            <div class="footer-note">
+              <!-- <p>Dustborn © 2023 Red Thread Games AS. All rights reserved. Published by Quantic Dream.</p> -->
+              <a href="#" class="privacy-link">Privacy Policy</a>
+            </div>
           </div>
         </div>
       </div>
-      
 
-    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
-    <script>
-        AOS.init({ offset: 0 });
-    </script>
+      <!-- Right Section -->
+      <div class="col-md-4">
+        <div class="card custom-card p-3">
+          <h1 class="h4">{{ game.title }}</h1>
+          <p class="text-white small mt-2">
+            {{ game.description }}
+
+          </p>
+          <div class="mt-3">
+            <p class="h4 text-success">Price:
+              {% if game.price == 0.00 %}
+              Free
+              {% else %}
+              ₹{{ game.price }}
+              {% endif %}
+            </p>
+          </div>
+
+          <div class="d-grid gap-2 mt-3 mb-4">
+            {% if game.price == 0.00 %}
+            <form action="{% url 'buy_game' game.id %}" method="post">
+              {% csrf_token %}
+              <button type="submit" class="btn custom-button w-100">Download Now</button>
+            </form>
+            <!-- <a href="../buy_game/{{ game.id }}" class="btn custom-button" download>Download Now</a> -->
+            {% else %}
+            <form action="{% url 'buy_game' game.id %}" method="post">
+              {% csrf_token %}
+              <button type="submit" class="btn custom-button w-100">Buy Now</button>
+            </form>
+            {% endif %}
+          </div>
+          <a href="https://www.utorrent.com/downloads/win/" class="btn custom-outline-button border">Download
+            Torrent</a>
+          <a href="../add_to_cart/{{ game.id }}" class="btn custom-outline-button border mt-3">Add to Cart</a>
+        </div>
+        <div class="divider"></div>
+        <div class="small">
+          <p>Epic Rewards: <span class="text-white">Earn 5% Back</span></p>
+          <p>Refund Type: <span class="text-white">Self-Refundable</span></p>
+          <p>Developer: <span class="text-white">{{ game.developer }}</span></p>
+          <p>Release Date: <span class="text-white">{{ game.date }}</span></p>
+          <p>Platform: <span class="text-white">Windows</span></p>
+        </div>
+        <div class="divider"></div>
+        <div class="d-flex justify-content-between">
+          <!-- <button class="btn btn-link text-white text-decoration-none">Share</button> -->
+          <button class="btn btn-link text-white text-decoration-none" data-bs-toggle="modal"
+            data-bs-target="#reportModal">Report</button>
+        </div>
+      </div>
+      <!-- ---------report----------------- -->
+      <div class="modal fade" id="reportModal" tabindex="-1" aria-labelledby="reportModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="reportModalLabel">Report Issue on {{ game.title }}</h5>
+              <button type="button" class="btn-close " data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form method="POST" action="../report_game/{{ game.id }}">
+                {% csrf_token %}
+                <div class="mb-3">
+                  <label for="report_reason" class="form-label ">
+                    <h3>Reason</h3>
+                  </label>
+                  <textarea class="form-control" id="report_reason" name="issue" required></textarea>
+                </div>
+                <button type="submit" class="btn custom-outline-button">Submit Report</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-8">
+        <div class="row align-items-center mb-4">
+          <div class="col">
+            <h2>Reviews</h2>
+          </div>
+          <div class="col-auto">
+            <a href="../view_review/{{ game.id }}" class="btn custom-button">View All</a>
+          </div>
+        </div>
+
+        {% if total_reviews > 0 %}
+        <h4>⭐ Average Rating: {{ average_rating }} / 10</h4>
+      {% endif %}
+        <div class="row">
+          {% for review in reviews %}
+          <div class="col-md-4">
+            <div class="card">
+              <h3 class="text-white">{{ review.user }}</h3>
+              <p class="rating">{{ review.rating }} / 10</p>
+              <p class="text-white">"{{ review.comment }}"</p>
+              <small class="text-secondary d-block text-left">
+                {{ review.created_at|date:"M d, Y" }}
+              </small>
+              {% if request.user == review.user %}
+              <form method="post" class="mt-3" action="../delete_review/{{ review.id }}">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-outline-danger btn-sm">
+                  Delete Review
+                </button>
+              </form>
+              {% endif %}
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+        {% if reviews|length == 0 %}
+          <p>No reviews available for this game.</p>
+        {% endif %}
+        
+        <h2>Add Your Review</h2>
+        <form class="review-form" action="../add_review/{{ game.id }}" method="POST">
+          {% csrf_token %}
+          <input type="number" name="rating" placeholder="Rating (1-10)" required min="1" max="10">
+          <textarea placeholder="Your Review" name="comment" required></textarea>
+          {% if my_review %}
+            <button type="submit" class="btn btn-secondary" disabled>You already reviewed</button>
+          {% else %}
+            <button type="submit" class="btn btn-primary">Submit Review</button>
+          {% endif %}
+        </form>
+        
+      </div>
+
+    </div>
+  </div>
+  </div>
+
+
+  <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+  <script>
+    AOS.init({ offset: 0 });
+  </script>
 
 </body>
+
 </html>
