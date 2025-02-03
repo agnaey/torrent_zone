@@ -162,7 +162,15 @@
             text-decoration: none;
         }
 
+        #brand-link::after {
+      content: " ZONE";
+    }
 
+    @media (max-width: 768px) {
+      #brand-link::after {
+        content: "";
+      }
+    }
 
 
 
@@ -173,9 +181,9 @@
 <body>
     <nav style="position: fixed;" class="navbar navbar-expand-lg">
         <div class="nav-container container">
-          <a class="navbar-brand text-white" data-aos="zoom-in" data-aos-duration="1500" href="#">
-            <span>TORRENT</span> ZONE
-          </a>
+            <a id="brand-link" class="navbar-brand text-white" data-aos="zoom-in" data-aos-duration="1500" href="#">
+                <span>TORRENT</span>
+              </a>
           <button
             class="navbar-toggler"
             type="button"
@@ -197,10 +205,10 @@
                 <a class="nav-link" href="../add_game">Add Games</a>
               </li>
               <li class="nav-item" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="300">
-                <a class="nav-link" href="#">Report</a>
+                <a class="nav-link" href="../view_all_report">Report</a>
               </li>
               <li class="nav-item" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="400">
-                <a class="nav-link" href="#">Review</a>
+                <a class="nav-link" href="#">Search</a>
               </li>
               <li class="nav-item" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="500">
                 <a class="nav-link" href="../logout"><span>Logout</span></a>

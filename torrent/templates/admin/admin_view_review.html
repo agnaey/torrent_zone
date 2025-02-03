@@ -225,7 +225,7 @@
     
         <div class="container mt-5">
             <h2>All Reviews for {{ game.title }}</h2>
-            <a href="../sec/{{game.id}}" class="btn btn-secondary mb-3">Back to Game</a>
+            <a href="../game_detail/{{game.id}}" class="btn btn-secondary mb-3">Back to Game</a>
     
             {% if reviews %}
                 <div class="row">
@@ -238,6 +238,12 @@
                             <small class="text-secondary d-block text-left">
                                 {{ review.created_at|date:"M d, Y" }}
                             </small>
+                            <form method="post" class="mt-3" action="../delete_review_admin/{{ review.id }}">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-outline-danger btn-sm">
+                                  Delete Review
+                                </button>
+                              </form>
                         </div>
                     </div>
                     {% endfor %}
@@ -248,19 +254,6 @@
         </div>
     
     
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

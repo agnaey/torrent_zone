@@ -306,15 +306,23 @@
             width: auto;
             height: 350px;
         } */
+        #brand-link::after {
+      content: " ZONE";
+    }
 
+    @media (max-width: 768px) {
+      #brand-link::after {
+        content: "";
+      }
+    }
 
     </style>
 </head>
 <body>
     <nav style="position: fixed;" class="navbar navbar-expand-lg">
         <div class="nav-container container">
-          <a class="navbar-brand text-white" data-aos="zoom-in" data-aos-duration="1500" href="#">
-            <span>TORRENT</span> ZONE
+          <a id="brand-link" class="navbar-brand text-white" data-aos="zoom-in" data-aos-duration="1500" href="#">
+            <span>TORRENT</span>
           </a>
           <button
             class="navbar-toggler"
@@ -509,26 +517,57 @@
               </div>
             </div>
 
-            <div class="col-md-8">
-              <h2>Critic Reviews</h2>
-              {% if review %}
 
+            <div class="col-md-8">
+              <div class="row align-items-center mb-4">
+                <div class="col">
+                  <h2>Reviews</h2>
+                </div>
+                <div class="col-auto">
+                  <a href="../admin_view_review/{{ game.id }}" class="btn custom-button">View All</a>
+                </div>
+              </div>
+      
+              {% if total_reviews > 0 %}
+              <h4>⭐ Average Rating: {{ average_rating }} / 10</h4>
+            {% endif %}
               <div class="row">
+                {% for review in reviews %}
                 <div class="col-md-4">
                   <div class="card">
                     <h3 class="text-white">{{ review.user }}</h3>
                     <p class="rating">{{ review.rating }} / 10</p>
                     <p class="text-white">"{{ review.comment }}"</p>
-                    <small class="text-secondary d-block text-left">{{ review.created_at|date:"M d, Y" }}</small>
+                    <small class="text-secondary d-block text-left">
+                      {{ review.created_at|date:"M d, Y" }}
+                    </small>
+                    <form method="post" class="mt-3" action="../delete_review_admin/{{ review.id }}">
+                      {% csrf_token %}
+                      <button type="submit" class="btn btn-outline-danger btn-sm">
+                        Delete Review
+                      </button>
+                    </form>
                   </div>
                 </div>
+                {% endfor %}
               </div>
-              {% else %}
-              <p>No reviews available for this game.</p>
+              {% if reviews|length == 0 %}
+                <p>No reviews available for this game.</p>
               {% endif %}
-
+              
+              <h2>Add Your Review</h2>
+              <form class="review-form" action="../add_review/{{ game.id }}" method="POST">
+                {% csrf_token %}
+                <input type="number" name="rating" placeholder="Rating (1-10)" required min="1" max="10">
+                <textarea placeholder="Your Review" name="comment" required></textarea>
+                {% if my_review %}
+                  <button type="submit" class="btn btn-secondary" disabled>You already reviewed</button>
+                {% else %}
+                  <button type="submit" class="btn btn-primary">Submit Review</button>
+                {% endif %}
+              </form>
+              
             </div>
-
           </div>
         </div>
       </div>

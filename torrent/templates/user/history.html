@@ -91,145 +91,153 @@
       justify-content: space-evenly;
       align-items: center;
     }
+
     section {
-            width: 100%;
-            height: 90vh;
-        }
+      width: 100%;
+      height: 90vh;
+    }
 
-        .cart-container {
-            max-width: 900px;
-            margin: auto;
-            background: #1E1E1E;
-            padding: 20px;
-            border-radius: 10px;
-        }
-        .game-image {
-            width: 100px;
-            border-radius: 5px;
-        }
-        @media(max-width:600px){
-            .navbar-brand .span2{
-                display: none;
-            }
-        }
-</style>
+    .cart-container {
+      max-width: 900px;
+      margin: auto;
+      background: #1E1E1E;
+      padding: 20px;
+      border-radius: 10px;
+    }
+
+    .game-image {
+      width: 100px;
+      border-radius: 5px;
+    }
+
+    #brand-link::after {
+      content: " ZONE";
+    }
+
+    @media (max-width: 768px) {
+      #brand-link::after {
+        content: "";
+      }
+    }
+  </style>
+
 <body>
-    <nav style="position: fixed;" class="navbar navbar-expand-lg">
-        <div class="nav-container container">
-          <a class="navbar-brand text-white" data-aos="zoom-in" data-aos-duration="1500" href="#">
-            <span class="span1">TORRENT</span><span class="span2"> ZONE</span>
-          </a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation" style="background-color: white;">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse justify-content-end " style="background-color: black;" id="navbarNav">
-            <ul class="navbar-nav">
-              <li class="nav-item" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="100">
-                <a class="nav-link" href="../">Home</a>
-              </li>
-              <li class="nav-item" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="300">
-                <a class="nav-link" href="../cart">Cart</a>
-              </li>
-    
-              <li class="nav-item" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="300">
-                <a class="nav-link" href="../history">History</a>
-              </li>
-              <li class="nav-item" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="400">
-                <a class="nav-link" href="#">Contact</a>
-              </li>
-              <li class="nav-item" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="500">
-                <a class="nav-link" href="../logout"><span>Logout</span></a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </nav>
+  <nav style="position: fixed;" class="navbar navbar-expand-lg">
+    <div class="nav-container container">
+      <a id="brand-link" class="navbar-brand text-white" data-aos="zoom-in" data-aos-duration="1500" href="#">
+        <span>TORRENT</span>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation" style="background-color: white;">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-end " style="background-color: black;" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="100">
+            <a class="nav-link" href="../">Home</a>
+          </li>
+          <li class="nav-item" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="300">
+            <a class="nav-link" href="../cart">Cart</a>
+          </li>
 
-      <div id="container1" class="container pt-5 mt-5" >
-        <h2 class="fw-bold mt-5 mb-3 text-center">My History</h2>
-        <div class="row">
-            <div class="col-lg-12 cart-container p-4">
-                <h2 class="mb-5 ">Purchased Games</h2>
-
-          {% if purchases %}
-          {% for i in purchases %}
-            <div id="cart1" class="d-flex flex-column flex-md-row align-items-center mt-3">
-                <img src="{{ i.game.image.url }}" alt="Technotopia" style="width: 170px;" class="game-image me-3 img-fluid">
-                <div class="flex-grow-1">
-                    <div class="col-12 col-md-6 col-lg-12 d-flex justify-content-between align-items-center">
-                        <h4 class="mb-0">{{ i.game.title }}</h4>
-                        <p class="mb-0"> <strong>₹{{ i.game.price }}</strong></p>
-                    </div>
-
-                    <span class="badge bg-secondary">Base Game</span>
-                    <p class="mb-1 text-secondary">IARC 7+ • Implied Violence</p>
-                    <p class="mb-1 text-warning"> Purchased on: {{ i.purchase_date|date:"d-m-y" }}</p>
-                </div>
-                <div class="mt-3 mt-md-0">
-                    <a href="../delete_purchase/{{i.id}}" class="btn text-secondary btn-sm"
-                    onclick="return confirm('Are you sure you want to delete this download?')">Delete</a>
-                    <!-- <button class="btn btn-link text-light">Move to wishlist</button> -->
-                </div>
-               
-            </div>
-            <hr>
-            {% endfor %}
-            
-            {% else %}
-            <p>You haven't purchased any games yet.</p>
-            {% endif %}
-            
-
-        </div>
+          <li class="nav-item" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="300">
+            <a class="nav-link" href="../history">History</a>
+          </li>
+          <li class="nav-item" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="400">
+            <a class="nav-link" href="#">Contact</a>
+          </li>
+          <li class="nav-item" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="500">
+            <a class="nav-link" href="../logout"><span>Logout</span></a>
+          </li>
+        </ul>
+      </div>
     </div>
-</div>
+  </nav>
 
-<div id="container1" class="container pt-5 mt-2" >
+  <div id="container1" class="container pt-5 mt-5">
+    <h2 class="fw-bold mt-5 mb-3 text-center">My History</h2>
     <div class="row">
-        <div class="col-lg-12 cart-container p-4">
-            <h2 class="mb-5 ">Free Games</h2>
+      <div class="col-lg-12 cart-container p-4">
+        <h2 class="mb-5 ">Purchased Games</h2>
 
-      {% if downloads %}
-      {% for i in downloads %}
+        {% if purchases %}
+        {% for i in purchases %}
         <div id="cart1" class="d-flex flex-column flex-md-row align-items-center mt-3">
-            <img src="{{ i.game.image.url }}" alt="Technotopia" style="width: 170px;" class="game-image me-3 img-fluid">
-            <div class="flex-grow-1">
-                <div class="col-12 col-md-6 col-lg-12 d-flex justify-content-between align-items-center">
-                    <h4 class="mb-0">{{ i.game.title }}</h4>
-                    <p class="mb-0"> <strong>Free</strong></p>
-                </div>
-
-                <span class="badge bg-secondary">Base Game</span>
-                <p class="mb-1 text-secondary">IARC 7+ • Implied Violence</p>
-                <p class="mb-1 text-warning"> Downloaded on: {{ i.downloaded_at|date:"d-m-y" }}</p>
+          <img src="{{ i.game.image.url }}" alt="Technotopia" style="width: 170px;" class="game-image me-3 img-fluid">
+          <div class="flex-grow-1">
+            <div class="col-12 col-md-6 col-lg-12 d-flex justify-content-between align-items-center">
+              <h4 class="mb-0">{{ i.game.title }}</h4>
+              <p class="mb-0"> <strong>₹{{ i.game.price }}</strong></p>
             </div>
-            <div class="mt-3 mt-md-0">
 
-                <a href="../delete_download/{{i.id}}" class="btn text-secondary btn-sm"
-               onclick="return confirm('Are you sure you want to delete this download?')">Delete</a>
+            <span class="badge bg-secondary">Base Game</span>
+            <p class="mb-1 text-secondary">IARC 7+ • Implied Violence</p>
+            <p class="mb-1 text-warning"> Purchased on: {{ i.purchase_date|date:"d-m-y" }}</p>
+          </div>
+          <div class="mt-3 mt-md-0">
+            <a href="../delete_purchase/{{i.id}}" class="btn text-secondary btn-sm"
+              onclick="return confirm('Are you sure you want to delete this download?')">Delete</a>
+            <!-- <button class="btn btn-link text-light">Move to wishlist</button> -->
+          </div>
 
-                <!-- <button class="btn btn-link text-light">Move to wishlist</button> -->
-            </div>
-           
         </div>
         <hr>
         {% endfor %}
-        
+
         {% else %}
         <p>You haven't purchased any games yet.</p>
         {% endif %}
-        
 
+
+      </div>
     </div>
-</div>
-</div>
+  </div>
+
+  <div id="container1" class="container pt-5 mt-2">
+    <div class="row">
+      <div class="col-lg-12 cart-container p-4">
+        <h2 class="mb-5 ">Free Games</h2>
+
+        {% if downloads %}
+        {% for i in downloads %}
+        <div id="cart1" class="d-flex flex-column flex-md-row align-items-center mt-3">
+          <img src="{{ i.game.image.url }}" alt="Technotopia" style="width: 170px;" class="game-image me-3 img-fluid">
+          <div class="flex-grow-1">
+            <div class="col-12 col-md-6 col-lg-12 d-flex justify-content-between align-items-center">
+              <h4 class="mb-0">{{ i.game.title }}</h4>
+              <p class="mb-0"> <strong>Free</strong></p>
+            </div>
+
+            <span class="badge bg-secondary">Base Game</span>
+            <p class="mb-1 text-secondary">IARC 7+ • Implied Violence</p>
+            <p class="mb-1 text-warning"> Downloaded on: {{ i.downloaded_at|date:"d-m-y" }}</p>
+          </div>
+          <div class="mt-3 mt-md-0">
+
+            <a href="../delete_download/{{i.id}}" class="btn text-secondary btn-sm"
+              onclick="return confirm('Are you sure you want to delete this download?')">Delete</a>
+
+            <!-- <button class="btn btn-link text-light">Move to wishlist</button> -->
+          </div>
+
+        </div>
+        <hr>
+        {% endfor %}
+
+        {% else %}
+        <p>You haven't purchased any games yet.</p>
+        {% endif %}
 
 
-<script src="https://unpkg.com/aos@next/dist/aos.js"></script>
-<script>
-  AOS.init({ offset: 0 });
-</script>
+      </div>
+    </div>
+  </div>
+
+
+  <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+  <script>
+    AOS.init({ offset: 0 });
+  </script>
 
 </body>
 

@@ -157,7 +157,15 @@
             text-decoration: none;
         }
 
+        #brand-link::after {
+      content: " ZONE";
+    }
 
+    @media (max-width: 768px) {
+      #brand-link::after {
+        content: "";
+      }
+    }
 
 
 
@@ -168,9 +176,9 @@
 <body>
     <nav style="position: fixed;" class="navbar navbar-expand-lg">
         <div class="nav-container container">
-          <a class="navbar-brand text-white" data-aos="zoom-in" data-aos-duration="1500" href="#">
-            <span>TORRENT</span> ZONE
-          </a>
+            <a id="brand-link" class="navbar-brand text-white" data-aos="zoom-in" data-aos-duration="1500" href="#">
+                <span>TORRENT</span>
+              </a>
           <button
             class="navbar-toggler"
             type="button"
@@ -225,13 +233,12 @@
     <div class="container">
         <h2 id="trending">Trending</h2>
     
-        <!-- Loop through the games and create rows -->
         <div class="row">
             {% for i in games %}
                 <div class="col-12 col-md-3 mb-4">  <!-- Adjust the number of columns per row -->
                     <div class="card" style="background-color: black; border: 1px solid #077b32; border-radius: 10px; box-shadow: 0 0 10px #077b32;">
                         <a style="text-decoration: none;" href="../sec/{{ i.id }}">
-                            <img src="{{ i.image.url }}" class="card-img-top img-fluid" alt="{{ i.name }}">
+                            <img src="{{ i.image.url }}" class="card-img-top img-fluid" alt="{{ i.title }}">
                             <div class="card-body">
                                 <h5 class="card-title text-center" style="color: #fafafa; text-shadow: 0 0 5px #077b32;">{{ i.title }}</h5>
                                 <p class="card-text text-center" style="color: rgb(9, 250, 29) ;font-size: 20px;">

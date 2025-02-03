@@ -72,7 +72,43 @@ def game_details(req,id):
     except GameRequirement.DoesNotExist:
         requ=None
 
-    return render(req, 'admin/game_details.html', {'game': game,'requ':requ})    
+    try:
+        review = Review.objects.filter(game=game)
+    except Review.DoesNotExist:
+        review = None
+    reviews = Review.objects.filter(game=game)
+    total_reviews = reviews.count()
+
+    average_rating = reviews.aggregate(Avg('rating'))['rating__avg'] or 0
+
+
+    my_review = Review.objects.filter(game=game, user=req.user).first() if req.user.is_authenticated else None
+    
+    
+    context = {
+        'game': game,
+        'requ': requ,
+        'reviews': reviews,
+        'my_review': my_review,
+        'total_reviews': total_reviews,
+        'average_rating': round(average_rating, 1),
+    }
+
+    return render(req, 'admin/game_details.html', context)    
+
+def delete_review_admin(request,id):
+    review = get_object_or_404(Review, id=id)
+    review.delete()
+    return redirect(game_details, id=review.game.id)
+
+def admin_view_review(request, id):
+    game = get_object_or_404(Game, id=id)
+    reviews = Review.objects.filter(game=game)[::-1]
+    return render(request, 'admin/admin_view_review.html', {'game': game, 'reviews': reviews})
+
+def view_all_report(request):
+    reports = Report.objects.select_related('game', 'user').order_by('-created_at')
+    return render(request, 'admin/admin_report.html', {'reports': reports})
 
 def add_game(req):
         if req.method == 'POST':

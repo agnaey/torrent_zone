@@ -9,6 +9,9 @@ urlpatterns = [
     # -------------admin------------------------------
     path('admin_home', views.admin_home, name='admin_home'),
     path('game_detail/<id>',views.game_details),
+    path('delete_review_admin/<id>',views.delete_review_admin, name='delete_review_admin'),
+    path('admin_view_review/<id>',views.admin_view_review, name='admin_view_review'),
+    path('view_all_report',views.view_all_report, name='view_all_report'),
 
     path('add_game', views.add_game, name='add_game'),
     path('add_game_req/<id>', views.add_game_req, name='add_game_req'),
