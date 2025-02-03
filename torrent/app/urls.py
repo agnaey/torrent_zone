@@ -29,5 +29,7 @@ urlpatterns = [
     path('view_review/<id>',views.view_review, name='view_review'),
     path('buy/<id>/', views.buy_game, name='buy_game'),
     path('history', views.history, name='history'),
+    path('delete_purchase/<id>', views.delete_purchase, name='delete_purchase'),
+    path('delete_download/<id>',views.delete_download,name='delete_download')
 
 ]

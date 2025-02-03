@@ -349,3 +349,14 @@ def history(request):
         'downloads': downloads,
     }
     return render(request, 'user/history.html', context)
+
+
+def delete_purchase(request, id):
+    purchase = get_object_or_404(Purchase, id=id, user=request.user)
+    purchase.delete()
+    return redirect('history')
+
+def delete_download(request, id):
+    download = get_object_or_404(DownloadHistory, id=id, user=request.user)
+    download.delete()
+    return redirect('history')

@@ -79,12 +79,12 @@ class DownloadHistory(models.Model):
         return f"{self.user.username} downloaded {self.game.title}"
 
 
-class DownloadHistoryView(ListView):
-    model = DownloadHistory
-    template_name = "user_downloads.html"
+# class DownloadHistoryView(ListView):
+#     model = DownloadHistory
+#     template_name = "user_downloads.html"
 
-    def get_queryset(self):
-        return DownloadHistory.objects.filter(user=self.request.user)
+#     def get_queryset(self):
+#         return DownloadHistory.objects.filter(user=self.request.user)
 
 
 
