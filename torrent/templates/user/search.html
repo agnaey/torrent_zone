@@ -1,17 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
+{% load static %}
 <head>
-    {% load static %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
-    <title>TORRENT ZONE</title>
-    <style>
-        body{
+    <title>Document</title>
+</head>
+<body>
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Shopping Cart</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+        <style>
+             body{
             background-color: black;
             color: white;
         }
@@ -25,7 +29,12 @@
             z-index: 1000;
             background-color: inherit;
         }
-
+        .nav-link:active,
+.nav-link:focus {
+    color: white;
+    background-color: transparent;
+    outline: none;
+}
         .nav-container {
             width: 100%;
             height: 100%;
@@ -40,16 +49,6 @@
             font-weight: bold;
         }
 
-        #navbarNav{
-    background-color: black;
-}
-
-.nav-link:active,
-.nav-link:focus {
-    color: white;
-    background-color: transparent;
-    outline: none;
-}
         span {
             color: #077b32;
             text-shadow: 0 0 10px #077b32;
@@ -93,90 +92,54 @@
             height: 90vh;
         }
 
-        .main-container {
-            width: 100%;
-            height: 100%;
-            display: flex;
-            justify-content: space-evenly;
-            align-items: center;
+        .cart-container {
+            max-width: 900px;
+            margin: auto;
+            background: #1E1E1E;
+            padding: 20px;
+            border-radius: 10px;
         }
-
-        .main-container .image {
-            width: 500px;
-            height: 80vh;
-            border-radius: 100%;
-            overflow: hidden;
-            box-shadow: 0 0 50px #077b32;
-        }
-        .main-container .content {
-            color: white;
-            width: 70%;
-            text-align: center;
-            min-height: 100px;
-        }
-
-        .content h1 {
-            font-size: clamp(1rem, 1rem + 5vw, 1.8rem);
-        }
-
-        .content h1 span {
-            color: #077b32;
-            text-shadow: 0 0 10px #077b32;
-        }
-
-        .content .typewriter {
-            font-size: clamp(1rem, 1rem + 5vw, 2.5rem);
-            margin-top: 20px;
-            margin-bottom: 20px;
-            font-weight: 600;
-        }
-
-        .content .typewriter-text {
-            margin-top: 20px;
-            color: #077b32;
-            text-shadow: 0 0 10px #077b32;
-        }
-        #button {
-            text-decoration: none;
-            padding: 20px 70px;
-            margin-top: 30px;
-            margin: 30px;
-            background-color: #D3D3D3;
-            color: black;
-            border: none;
-            outline: none;
-            font-size: 120%;
-            font-weight: 700;
+        .game-image {
+            width: 100px;
             border-radius: 5px;
-            transition: 0.2s linear;
+        }
+        .btn-checkout {
+            background-color: #077b32;
+            color: white;
+            border: none;
+            width: 100%;
+        }
+        .btn-checkout:hover {
+           color: #077b32;
+            border: none;
+            width: 100%;
+            border: 1px solid #077b32;
+            box-shadow: 0 0 40px #077b32;
         }
 
-        #button:hover {
-            scale: 1.1;
-            color: #D3D3D3;
-            border: 2px solid #D3D3D3;
-            background-color: transparent;
-            font-weight: 700;
-            box-shadow: 0 0 40px #D3D3D3;
-        }
-        .card-img-top{
-            height: 260px;
-            object-fit: cover;
-        }
-        h5{
-            text-decoration: none;
+        #container1 {
+            padding: 250px;
         }
 
-        #brand-link::after {
-      content: " ZONE";
-    }
-
-    @media (max-width: 768px) {
-      #brand-link::after {
-        content: "";
-      }
-    }
-
+@media (max-width: 768px) {
+    #container1 {
+            padding: 0px;
+            display: block;
+            
+        }
+        #cart1{
+            display: block;
+        }
+    
+}
+#brand-link::after {
+  content: " ZONE";  
+}
+@media (max-width: 768px) {
+  #brand-link::after {
+    content: "";
+  }
+}
     .full-width.search_ {
   position: fixed;
   width: 100%;
@@ -215,15 +178,14 @@
 
 
 
-
     </style>
 </head>
 <body>
     <nav style="position: fixed;" class="navbar navbar-expand-lg">
         <div class="nav-container container">
-            <a id="brand-link" class="navbar-brand text-white" data-aos="zoom-in" data-aos-duration="1500" href="#">
-                <span>TORRENT</span>
-              </a>
+          <a id="brand-link" class="navbar-brand text-white" data-aos="zoom-in" data-aos-duration="1500" href="#">
+            <span>TORRENT</span>
+          </a>
           <button
             class="navbar-toggler"
             type="button"
@@ -239,14 +201,15 @@
           <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
             <ul class="navbar-nav">
               <li class="nav-item" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="100">
-                <a class="nav-link" href="../admin_home">Home</a>
+                <a class="nav-link" href="../index">Home</a>
               </li>
               <li class="nav-item" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="200">
-                <a class="nav-link" href="../add_game">Add Games</a>
+                <a class="nav-link" href="../cart">Cart</a>
               </li>
               <li class="nav-item" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="300">
-                <a class="nav-link" href="../view_all_report">Report</a>
+                <a class="nav-link" href="../history">History</a>
               </li>
+              <!-- Add an id for the search button -->
               <li class="nav-item" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="400">
                 <a id="nav-search-btn" class="nav-link" href="#">Search</a>
               </li>
@@ -257,8 +220,9 @@
           </div>
         </div>
       </nav>
-      
-      <form id="search-form" method="POST" action="{% url 'admin_search' %}">
+
+
+      <form id="search-form" method="POST" action="{% url 'search' %}">
         {% csrf_token %}
         <div class="full-width search_ p-4">
           <div class="search-form">
@@ -266,69 +230,55 @@
           </div>
         </div>
       </form>
+      
 
-    <section class="mt-5">
-        <div id="home" class="main-container mb-5">
-            <div class="content">
-                <h1 data-aos="fade-left" data-aos-duration="1500" data-aos-delay="700">Welcome to<span> ADMIN</span> Page</h1>
+      <div class="container carousel-inner p-5 mt-5" >
+        <div class="carousel-item active ">
+            <h1 class="text-center"> Search Product</h1>
 
+            <div class="card-body">
+                <form action="POST"></form>
+            </div><br>
 
-                <!-- <div class=" mt-5 mb-5" data-aos="zoom-in" data-aos-duration="1500" data-aos-delay="1800">
-                    <a  id="button" href="#trending">EXPLORE</a>
-                </div> -->
-            </div>
-        </div>
-        
-    </section>
+            {% if search %}
+            <p class="text-white">Your searched for: <strong>{{ search }}</strong></p>
+            {% endif %}
 
-    <div class="container">
-        <h2 id="trending">All Games</h2>
-    
-        <div class="row">
-            {% for i in games %}
+            <div class="row">
+                {% if results %}
+                {% for i in results %}
                 <div class="col-12 col-md-3 mb-4"> 
-                    <div class="card" style="background-color: black; border: 1px solid #077b32; border-radius: 10px; box-shadow: 0 0 10px #077b32;">
-                        <a style="text-decoration: none;" href="../game_detail/{{ i.id }}">
-                            <img src="{{ i.image.url }}" class="card-img-top img-fluid" alt="{{ i.name }}">
+                    <div class="card" style="background-color: black; border-radius: 10px; box-shadow: 0 0 10px #077b32;">
+                        <a style="text-decoration: none;" href="../sec/{{ i.id }}">
+                            <img src="{{ i.image.url }}" class="card-img-top img-fluid" alt="{{ i.title }}">
                             <div class="card-body">
                                 <h5 class="card-title text-center" style="color: #fafafa; text-shadow: 0 0 5px #077b32;">{{ i.title }}</h5>
-                                <p class="card-text text-center" style="color: aliceblue">
+                                <p class="card-text text-center" style="color: rgb(9, 250, 29); font-size: 20px;">
                                     {% if i.price == 0.00 %}
                                         Free
                                     {% else %}
                                     ₹{{ i.price }}
                                     {% endif %}
                                 </p>
-                                <hr class="text-secondary">
-                                <div class="row">
-                                    <div class="row justify-content-center">
-                                        <div class="col-md-4 mt-3 d-flex justify-content-center text-center gap-3">
-                                            <a href="../edit_game/{{ i.id }}" class="btn btn-outline-warning">Edit</a>
-                                            <a href="../delete_game/{{ i.id }}" class="btn btn-outline-danger">Delete</a>
-                                        </div>
-                                    </div>
-                                    
-                                </div>
-                                
                             </div>
                         </a>
                     </div>
                 </div>
-    
-
-            {% endfor %}
+                {% endfor %}
+                {% else %}
+                <p>No results found for "{{ search }}".</p>
+                {% endif %}
+            </div>
         </div>
+
     </div>
-    
 
 
 
 
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-
-
-
-    <script>
+<script>
         document.addEventListener('DOMContentLoaded', function() {
           const searchBtn = document.getElementById('nav-search-btn');
           const searchBar = document.querySelector('.full-width.search_');
@@ -339,11 +289,5 @@
           });
         });
       </script>
-
-    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
-    <script>
-        AOS.init({ offset: 0 });
-    </script>
-
-</body>
-</html>
+    </body>
+    </html>

@@ -284,7 +284,13 @@ def admin_add_review(request, id):
     
     return redirect('game_details', id=id)
 
-
+def admin_search(request):
+    if request.method == 'POST':
+        search = request.POST.get('search', '')  
+        results = Game.objects.filter(title__icontains=search) if search else []
+        return render(request, 'admin/admin_search.html', {'search': search, 'results': results})
+    else:
+        return render(request, 'admin/admin_search.html', {'search': '', 'results': []})
     
 
 # --------------user--------------------
@@ -414,3 +420,12 @@ def delete_download(request, id):
     download = get_object_or_404(DownloadHistory, id=id, user=request.user)
     download.delete()
     return redirect('history')
+
+def search(request):
+    if request.method == 'POST':
+        search = request.POST.get('search', '')  
+        results = Game.objects.filter(title__icontains=search) if search else []
+        return render(request, 'user/search.html', {'search': search, 'results': results})
+    else:
+        return render(request, 'user/search.html', {'search': '', 'results': []})
+

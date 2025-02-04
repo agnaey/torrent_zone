@@ -21,6 +21,7 @@ urlpatterns = [
     path('delete_req/<id>',views.delete_req, name='delete_req'),
     path('delete_report/<id>',views.delete_report,name='delete_report'),
     path('admin_add_review/<id>',views.admin_add_review, name='admin_add_review'),
+    path('admin_search',views.admin_search, name='admin_search'),
 
 
     # ----------user------------------------------
@@ -36,6 +37,7 @@ urlpatterns = [
     path('buy/<id>/', views.buy_game, name='buy_game'),
     path('history', views.history, name='history'),
     path('delete_purchase/<id>', views.delete_purchase, name='delete_purchase'),
-    path('delete_download/<id>',views.delete_download,name='delete_download')
+    path('delete_download/<id>',views.delete_download,name='delete_download'),
+    path('search',views.search, name='search'),
 
 ]

@@ -39,7 +39,12 @@
             font-size: 2rem;
             font-weight: bold;
         }
-
+        .nav-link:active,
+.nav-link:focus {
+    color: white;
+    background-color: transparent;
+    outline: none;
+}
         span {
             color: #077b32;
             text-shadow: 0 0 10px #077b32;
@@ -169,6 +174,42 @@
 
 
 
+    .full-width.search_ {
+  position: fixed;
+  width: 100%;
+  box-sizing: border-box;
+  top: -100px; 
+  background-color: black;
+  padding: 10px 100px;
+  transition: top 0.3s ease-in-out;
+  z-index: 1050;
+}
+
+.full-width.search_.active {
+  top: 70px; 
+}
+
+.search-form {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.search-form input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  outline: none;
+  background-color: #D3D3D3;
+  color: black;
+  font-size: 120%;
+  font-weight: 700;
+  transition: 0.2s linear;
+}
+
 
 
     </style>
@@ -176,9 +217,9 @@
 <body>
     <nav style="position: fixed;" class="navbar navbar-expand-lg">
         <div class="nav-container container">
-            <a id="brand-link" class="navbar-brand text-white" data-aos="zoom-in" data-aos-duration="1500" href="#">
-                <span>TORRENT</span>
-              </a>
+          <a id="brand-link" class="navbar-brand text-white" data-aos="zoom-in" data-aos-duration="1500" href="#">
+            <span>TORRENT</span>
+          </a>
           <button
             class="navbar-toggler"
             type="button"
@@ -197,13 +238,13 @@
                 <a class="nav-link" href="#home">Home</a>
               </li>
               <li class="nav-item" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="200">
-                <a class="nav-link" href="../cart">cart</a>
+                <a class="nav-link" href="../cart">Cart</a>
               </li>
               <li class="nav-item" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="300">
                 <a class="nav-link" href="../history">History</a>
               </li>
               <li class="nav-item" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="400">
-                <a class="nav-link" href="#">Search</a>
+                <a id="nav-search-btn" class="nav-link" href="#">Search</a>
               </li>
               <li class="nav-item" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="500">
                 <a class="nav-link" href="../logout"><span>Logout</span></a>
@@ -212,7 +253,16 @@
           </div>
         </div>
       </nav>
-      
+
+
+      <form id="search-form" method="POST" action="{% url 'search' %}">
+        {% csrf_token %}
+        <div class="full-width search_ p-4">
+          <div class="search-form">
+            <input type="text" name="search" id="search" placeholder="Search">
+          </div>
+        </div>
+      </form>
       
 
     <section class="mt-5">
@@ -321,5 +371,16 @@
         }
         window.onload = typeWriter
     </script>
+          <script>
+            document.addEventListener('DOMContentLoaded', function() {
+              const searchBtn = document.getElementById('nav-search-btn');
+              const searchBar = document.querySelector('.full-width.search_');
+          
+              searchBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                searchBar.classList.toggle('active');
+              });
+            });
+          </script>
 </body>
 </html>
