@@ -110,6 +110,11 @@ def view_all_report(request):
     reports = Report.objects.select_related('game', 'user').order_by('-created_at')
     return render(request, 'admin/admin_report.html', {'reports': reports})
 
+def delete_report(req,id):
+    report=Report.objects.get(id=id)
+    report.delete()
+    return redirect('view_all_report')
+
 def add_game(req):
         if req.method == 'POST':
             title = req.POST['title']
@@ -265,6 +270,19 @@ def delete_req(req, id):
     except GameRequirement.DoesNotExist:
         pass
     return redirect('admin_home')
+
+def admin_add_review(request, id):
+    if request.method == "POST":
+        review_text = request.POST.get('comment')
+        rating = request.POST.get('rating')
+
+        if not review_text:
+            return redirect('game_details', id=id)
+        game = get_object_or_404(Game, id=id)
+        Review.objects.create(user=request.user, game=game, comment=review_text, rating=rating or 0)
+        return redirect(game_details, id=id)
+    
+    return redirect('game_details', id=id)
 
 
     

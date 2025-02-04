@@ -170,7 +170,7 @@
                     <a class="nav-link" href="../history">History</a>
                   </li>
                   <li class="nav-item" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="400">
-                    <a class="nav-link" href="#">Contact</a>
+                    <a class="nav-link" href="#">Search</a>
                   </li>
                   <li class="nav-item" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="500">
                     <a class="nav-link" href="../logout"><span>Logout</span></a>
@@ -181,15 +181,15 @@
           </nav>
 
 
-        <div id="container1" class="container pt-5" style="padding-left: 50px;">
+        <div id="container1" class="container pt-5" style="padding: 50px;">
             <h2 class="fw-bold mt-5">My Cart</h2>
             <div class="row">
-            <div class="col-lg-8 cart-container p-4">
+            <div class="col-lg-7 cart-container p-4">
               {% for i in cart %}
               <a href="../sec/{{ i.game.id }}" style="text-decoration: none; color: white;">
                 <div id="cart1" class="d-flex flex-row align-items-center mt-3">
 
-                <img src="{{ i.game.image.url }}" alt="Technotopia" style="width: 60%;" class="game-image me-3 img-fluid mb-3">
+                <img src="{{ i.game.image.url }}" alt="Technotopia" style="width: auto;" class="game-image me-3 img-fluid mb-3">
                 <div class="flex-grow-1 ms-3">
                     <div class="d-flex justify-content-between align-items-center">
                         <h4 class="mb-0">{{ i.game.title }}</h4>
@@ -201,14 +201,16 @@
                     <p class="mb-1 text-warning"> Earn 5% back in Epic Rewards</p>
                     <p class="text-success">Self-Refundable</p>
                 </div>
-                <div class="ms-auto">
-                    <a href="../remove_cart/{{ i.id }}" onclick="return confirm('Are you sure you want to delete this download?')" class="btn text-secondary">Remove</a>
-
-                </div>
+   
               </a>
 
             </div>
                 <hr>
+                <div class="ms-auto">
+                  <a href="../remove_cart/{{ i.id }}" onclick="return confirm('Are you sure you want to delete this download?')" class="btn text-secondary">Remove</a>
+
+              </div>
+              <hr>
                 {% empty %}
                 <p class="text-center">Your cart is empty</p>
                 {% endfor %}
@@ -216,7 +218,7 @@
             </div>
 
             
-            <div class="cart-container mt-3 p-4 col-lg-3">
+            <div class="cart-container mt-3 p-4 col-lg-4">
                 <h5>Games and Apps Summary</h5>
                 <p class="d-flex justify-content-between">
                     <span>Price</span>
@@ -238,5 +240,3 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     </body>
     </html>
-</body>
-</html>

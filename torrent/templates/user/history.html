@@ -144,7 +144,7 @@
             <a class="nav-link" href="../history">History</a>
           </li>
           <li class="nav-item" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="400">
-            <a class="nav-link" href="#">Contact</a>
+            <a class="nav-link" href="#">Search</a>
           </li>
           <li class="nav-item" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="500">
             <a class="nav-link" href="../logout"><span>Logout</span></a>
@@ -163,12 +163,14 @@
         {% if purchases %}
         {% for i in purchases %}
         <div id="cart1" class="d-flex flex-column flex-md-row align-items-center mt-3">
+          <a href="../sec/{{ i.game.id }}" style="text-decoration: none; color: white;">
           <img src="{{ i.game.image.url }}" alt="Technotopia" style="width: 170px;" class="game-image me-3 img-fluid">
           <div class="flex-grow-1">
             <div class="col-12 col-md-6 col-lg-12 d-flex justify-content-between align-items-center">
               <h4 class="mb-0">{{ i.game.title }}</h4>
               <p class="mb-0"> <strong>₹{{ i.game.price }}</strong></p>
             </div>
+          </a>
 
             <span class="badge bg-secondary">Base Game</span>
             <p class="mb-1 text-secondary">IARC 7+ • Implied Violence</p>
@@ -181,6 +183,7 @@
           </div>
 
         </div>
+       </a>
         <hr>
         {% endfor %}
 
@@ -201,12 +204,14 @@
         {% if downloads %}
         {% for i in downloads %}
         <div id="cart1" class="d-flex flex-column flex-md-row align-items-center mt-3">
+          <a href="../sec/{{ i.game.id }}" style="text-decoration: none; color: white;">
           <img src="{{ i.game.image.url }}" alt="Technotopia" style="width: 170px;" class="game-image me-3 img-fluid">
           <div class="flex-grow-1">
             <div class="col-12 col-md-6 col-lg-12 d-flex justify-content-between align-items-center">
               <h4 class="mb-0">{{ i.game.title }}</h4>
               <p class="mb-0"> <strong>Free</strong></p>
             </div>
+          </a>
 
             <span class="badge bg-secondary">Base Game</span>
             <p class="mb-1 text-secondary">IARC 7+ • Implied Violence</p>

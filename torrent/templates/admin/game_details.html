@@ -339,18 +339,17 @@
           <div class="collapse navbar-collapse justify-content-end " style="background-color: black;" id="navbarNav">
             <ul class="navbar-nav">
               <li class="nav-item" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="100">
-                <a class="nav-link" href="../">Home</a>
+                <a class="nav-link" href="../admin_home">Home</a>
               </li>
-              <li class="nav-item" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="300">
+              <li class="nav-item" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="200">
                 <a class="nav-link" href="../add_game">Add Games</a>
               </li>
-
               <li class="nav-item" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="300">
-                <a class="nav-link" href="#">Report</a>
+                <a class="nav-link" href="../view_all_report">Report</a>
               </li>
-              <!-- <li class="nav-item" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="400">
-                <a class="nav-link" href="#">Contact</a>
-              </li> -->
+              <li class="nav-item" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="400">
+                <a class="nav-link" href="#">Search</a>
+              </li>
               <li class="nav-item" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="500">
                 <a class="nav-link" href="../logout"><span>Logout</span></a>
               </li>
@@ -484,37 +483,11 @@
                 <p>Epic Rewards: <span class="text-white">Earn 5% Back</span></p>
                 <p>Refund Type: <span class="text-white">Self-Refundable</span></p>
                 <p>Developer: <span class="text-white">{{ game.developer }}</span></p>
-                <p>Release Date: <span class="text-white">{{ game.date }}</span></p>
+                <p>Release Date: <span class="text-white">{{ game.release_date }}</span></p>
                 <p>Platform: <span class="text-white">Windows</span></p>
               </div>
               <div class="divider"></div>
-              <div class="d-flex justify-content-between">
-                <!-- <button class="btn btn-link text-white text-decoration-none">Share</button> -->
-                <button class="btn btn-link text-white text-decoration-none" data-bs-toggle="modal" data-bs-target="#reportModal">Report</button>
 
-
-<!-- Report -->
-<div class="modal fade" id="reportModal" tabindex="-1" aria-labelledby="reportModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-      <div class="modal-content">
-          <div class="modal-header">
-              <h5 class="modal-title" id="reportModalLabel">Report Issue</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-              <form method="POST" action="">
-                  {% csrf_token %}
-                  <div class="mb-3">
-                      <label for="report_reason" class="form-label">Reason</label>
-                      <textarea class="form-control" id="report_reason" name="reason" required></textarea>
-                  </div>
-                  <button type="submit" class="btn btn-primary">Submit Report</button>
-              </form>
-          </div>
-      </div>
-  </div>
-</div>
-              </div>
             </div>
 
 
@@ -556,7 +529,7 @@
               {% endif %}
               
               <h2>Add Your Review</h2>
-              <form class="review-form" action="../add_review/{{ game.id }}" method="POST">
+              <form class="review-form" action="../admin_add_review/{{ game.id }}" method="POST">
                 {% csrf_token %}
                 <input type="number" name="rating" placeholder="Rating (1-10)" required min="1" max="10">
                 <textarea placeholder="Your Review" name="comment" required></textarea>

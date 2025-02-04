@@ -8,7 +8,7 @@ urlpatterns = [
 
     # -------------admin------------------------------
     path('admin_home', views.admin_home, name='admin_home'),
-    path('game_detail/<id>',views.game_details),
+    path('game_detail/<id>',views.game_details,name="game_detail"),
     path('delete_review_admin/<id>',views.delete_review_admin, name='delete_review_admin'),
     path('admin_view_review/<id>',views.admin_view_review, name='admin_view_review'),
     path('view_all_report',views.view_all_report, name='view_all_report'),
@@ -19,6 +19,9 @@ urlpatterns = [
     path('edit_req/<id>',views.edit_req),
     path('delete_game/<id>',views.delete_game),
     path('delete_req/<id>',views.delete_req, name='delete_req'),
+    path('delete_report/<id>',views.delete_report,name='delete_report'),
+    path('admin_add_review/<id>',views.admin_add_review, name='admin_add_review'),
+
 
     # ----------user------------------------------
     path('index', views.index, name='index'),
