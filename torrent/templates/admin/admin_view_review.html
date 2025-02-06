@@ -191,7 +191,47 @@
     }
 
 
+    .full-width.search_ {
+  position: fixed;
+  width: 100%;
+  box-sizing: border-box;
+  top: -100px; 
+  background-color: black;
+  padding: 10px 100px;
+  transition: top 0.3s ease-in-out;
+  z-index: 1050;
+}
 
+.full-width.search_.active {
+  top: 70px; 
+}
+
+.search-form {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.search-form input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  outline: none;
+  background-color: #D3D3D3;
+  color: black;
+  font-size: 120%;
+  font-weight: 700;
+  transition: 0.2s linear;
+}
+
+@media (max-width: 991px) {
+    .navbar-collapse {
+        background-color: black;
+    }
+}
 
     </style>
 </head>
@@ -211,19 +251,31 @@
                         <li class="nav-item" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="100">
                             <a class="nav-link" href="../admin_home">Home</a>
                         </li>
+                        <li class="nav-item" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="200">
+                            <a class="nav-link" href="../add_game">Add Games</a>
+                          </li>
                         <li class="nav-item" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="300">
                             <a class="nav-link" href="../view_all_report">Report</a>
                           </li>
                           <li class="nav-item" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="400">
-                            <a class="nav-link" href="#">Search</a>
+                            <a id="nav-search-btn" class="nav-link" href="#">Search</a>
                           </li>
-                        <li class="nav-item" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="500">
+                          <li class="nav-item" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="500">
                             <a class="nav-link" href="../logout"><span>Logout</span></a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </nav>
+                  
+                  <form id="search-form" method="POST" action="{% url 'admin_search' %}">
+                    {% csrf_token %}
+                    <div class="full-width search_ p-4">
+                      <div class="search-form">
+                        <input type="text" name="search" id="search" placeholder="Search">
+                      </div>
+                    </div>
+                  </form>
     
         <div  class="container p-5 mt-5">
             <h2 class="">All Reviews for {{ game.title }}</h2>
@@ -263,6 +315,18 @@
     <script>
         AOS.init({ offset: 0 });
     </script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const searchBtn = document.getElementById('nav-search-btn');
+      const searchBar = document.querySelector('.full-width.search_');
+  
+      searchBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        searchBar.classList.toggle('active');
+      });
+    });
+  </script>
 
 </body>
 </html>

@@ -231,6 +231,11 @@
   transition: 0.2s linear;
 }
 
+@media (max-width: 991px) {
+    .navbar-collapse {
+        background-color: black;
+    }
+}
 
 
     </style>
@@ -288,8 +293,8 @@
 
 
     
-        <div class="container mt-5">
-            <h2>All Reviews for {{ game.title }}</h2>
+        <div class="container p-5">
+            <h2 class="mt-5">All Reviews for {{ game.title }}</h2>
             <a href="../sec/{{game.id}}" class="btn btn-secondary mb-3">Back to Game</a>
     
             {% if reviews %}

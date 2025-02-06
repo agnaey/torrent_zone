@@ -296,9 +296,11 @@ def admin_search(request):
 # --------------user--------------------
 
 def index(request):
-    games=Game.objects.all()
-    
-    return render(request, 'user/index.html',{'games':games})
+    games=Game.objects.all().order_by("?")
+    paid_games = Game.objects.filter(is_paid=True)
+    free_games = Game.objects.filter(is_paid=False)
+
+    return render(request, 'user/index.html',{'games':games,'paid_games':paid_games,'free_games':free_games})
 
 def sec(req,id):
     game=Game.objects.get(id=id)

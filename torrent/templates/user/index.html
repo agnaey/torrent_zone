@@ -210,7 +210,18 @@
   transition: 0.2s linear;
 }
 
+.img-hover {
+    transition: transform 0.3s ease-in-out;
+}
 
+.img-hover:hover {
+  filter:  brightness(80%);}
+
+  @media (max-width: 991px) {
+    .navbar-collapse {
+        background-color: black;
+    }
+}
 
     </style>
 </head>
@@ -280,15 +291,75 @@
         
     </section>
 
+
     <div class="container">
-        <h2 id="trending">Trending</h2>
+      <h2 id="trending">Paid Games</h2>
+  
+      <div class="row">
+          {% for i in paid_games %}
+              <div class="col-12 col-md-3 mb-4">  <!-- Adjust the number of columns per row -->
+                  <div class="card" style="background-color: black; border: 1px solid #077b32; border-radius: 10px; box-shadow: 0 0 10px #077b32;">
+                      <a style="text-decoration: none;" href="../sec/{{ i.id }}">
+                          <img src="{{ i.image.url }}" class="card-img-top img-fluid img-hover" alt="{{ i.title }}">
+                          <div class="card-body">
+                              <h5 class="card-title text-center" style="color: #fafafa; text-shadow: 0 0 5px #077b32;">{{ i.title }}</h5>
+                              <p class="card-text text-center" style="color: rgb(9, 250, 29) ;font-size: 20px;">
+                                  {% if i.price == 0.00 %}
+                                      Free
+                                  {% else %}
+                                  ₹{{ i.price }}
+                                  {% endif %}
+                              </p>
+                          </div>
+                      </a>
+                  </div>
+              </div>
+  
+
+          {% endfor %}
+      </div>
+  </div>
+
+
+  <div class="container">
+    <h2 id="trending">Free Games</h2>
+
+    <div class="row">
+        {% for i in free_games %}
+            <div class="col-12 col-md-3 mb-4">  <!-- Adjust the number of columns per row -->
+                <div class="card" style="background-color: black; border: 1px solid #077b32; border-radius: 10px; box-shadow: 0 0 10px #077b32;">
+                    <a style="text-decoration: none;" href="../sec/{{ i.id }}">
+                        <img src="{{ i.image.url }}" class="card-img-top img-fluid img-hover" alt="{{ i.title }}">
+                        <div class="card-body">
+                            <h5 class="card-title text-center" style="color: #fafafa; text-shadow: 0 0 5px #077b32;">{{ i.title }}</h5>
+                            <p class="card-text text-center" style="color: rgb(9, 250, 29) ;font-size: 20px;">
+                                {% if i.price == 0.00 %}
+                                    Free
+                                {% else %}
+                                ₹{{ i.price }}
+                                {% endif %}
+                            </p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+
+        {% endfor %}
+    </div>
+</div>
+
+
+
+    <div class="container">
+        <h2 id="trending">All Games</h2>
     
         <div class="row">
             {% for i in games %}
                 <div class="col-12 col-md-3 mb-4">  <!-- Adjust the number of columns per row -->
                     <div class="card" style="background-color: black; border: 1px solid #077b32; border-radius: 10px; box-shadow: 0 0 10px #077b32;">
                         <a style="text-decoration: none;" href="../sec/{{ i.id }}">
-                            <img src="{{ i.image.url }}" class="card-img-top img-fluid" alt="{{ i.title }}">
+                            <img src="{{ i.image.url }}" class="card-img-top img-fluid img-hover" alt="{{ i.title }}">
                             <div class="card-body">
                                 <h5 class="card-title text-center" style="color: #fafafa; text-shadow: 0 0 5px #077b32;">{{ i.title }}</h5>
                                 <p class="card-text text-center" style="color: rgb(9, 250, 29) ;font-size: 20px;">

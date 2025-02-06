@@ -212,6 +212,13 @@
   font-weight: 700;
   transition: 0.2s linear;
 }
+.img-hover {
+    transition: transform 0.3s ease-in-out;
+}
+
+.img-hover:hover {
+  filter:  brightness(80%);}
+
 
 
 
@@ -289,7 +296,7 @@
                 <div class="col-12 col-md-3 mb-4"> 
                     <div class="card" style="background-color: black; border: 1px solid #077b32; border-radius: 10px; box-shadow: 0 0 10px #077b32;">
                         <a style="text-decoration: none;" href="../game_detail/{{ i.id }}">
-                            <img src="{{ i.image.url }}" class="card-img-top img-fluid" alt="{{ i.name }}">
+                            <img src="{{ i.image.url }}" class="card-img-top img-fluid img-hover" alt="{{ i.name }}">
                             <div class="card-body">
                                 <h5 class="card-title text-center" style="color: #fafafa; text-shadow: 0 0 5px #077b32;">{{ i.title }}</h5>
                                 <p class="card-text text-center" style="color: aliceblue">
