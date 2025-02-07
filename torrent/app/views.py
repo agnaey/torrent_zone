@@ -7,6 +7,10 @@ from django.db.models import Avg
 from django.contrib import messages
 from django.contrib.auth import authenticate,login as auth_login,logout as auth_logout
 from django.conf import settings
+from django.urls import reverse
+import razorpay
+from django.views.decorators.csrf import csrf_exempt
+from django.http import JsonResponse, HttpResponseBadRequest
 # Create your views here.
 
 
@@ -17,7 +21,7 @@ def login(req):
         return redirect(index)
     else:
         if req.method=='POST':
-            username = req.POST.get("username")  # Use .get() to avoid KeyError
+            username = req.POST.get("username") 
             password = req.POST.get("password")
             data=authenticate(username=username,password=password)
             if data:
@@ -170,7 +174,7 @@ def add_game(req):
             developer = req.POST['developer']
             release_date = req.POST['release_date']
 
-            image = req.FILES.get('image')  # Handle optional file upload
+            image = req.FILES.get('image')
             torrent = req.FILES.get('torrent')
 
             is_paid = 'is_paid' in req.POST
@@ -180,10 +184,9 @@ def add_game(req):
                 price = 0
             else:
                 try:
-                    price = int(price)  # Convert price to integer
+                    price = int(price) 
                 except ValueError:
                     price = 0
-            # Create the game object
             game = Game.objects.create(
                 title=title,
                 des=des,
@@ -210,9 +213,8 @@ def add_game_req(req, id):
         memory = req.POST['memory']
         graphics = req.POST['graphics']
 
-        # Create the GameRequirement entry
         game_requirement, created = GameRequirement.objects.get_or_create(
-            game=game,  # Get the existing GameRequirement if it exists
+            game=game,  
             defaults={
                 'os': os,
                 'processor': processor,
@@ -436,20 +438,88 @@ def view_review(request, id):
     reviews = Review.objects.filter(game=game)[::-1]
     return render(request, 'user/all_reviews.html', {'game': game, 'reviews': reviews})
 
+
+
+
 def buy_game(request, id):
     game = get_object_or_404(Game, pk=id)
-    if game.price == 0.00:
-        DownloadHistory.objects.create(user=request.user, game=game)
-    else:
-        Purchase.objects.create(user=request.user, game=game)
-    file_path = game.torrent.path 
     
-    if os.path.exists(file_path):
-        response = FileResponse(open(file_path, 'rb'), as_attachment=True, filename=os.path.basename(file_path))
-        return response
+    if game.price == 0:
+            DownloadHistory.objects.create(user=request.user, game=game)
+            
+            file_path = game.torrent.path
+
+            if os.path.exists(file_path):
+                file = open(file_path, 'rb')
+                return FileResponse(file, as_attachment=True, filename=os.path.basename(file_path))
+            else:
+                raise Http404("File not found.")
+
     else:
-        raise Http404("File not found.")
+        return redirect('order_payment', game_id=game.id)
+
+
+
+def order_payment(request, game_id):
+    game = get_object_or_404(Game, pk=game_id)
     
+    if game.price == 0:
+        DownloadHistory.objects.get_or_create(user=request.user, game=game)
+        return redirect('download_game', id=game.id)
+    
+    client = razorpay.Client(auth=(settings.RAZORPAY_KEY_ID, settings.RAZORPAY_KEY_SECRET))
+    razorpay_order = client.order.create({
+        "amount": game.price * 100, 
+        "currency": "INR",
+        "payment_capture": "1"
+    })
+
+    context = {
+        "callback_url": request.build_absolute_uri(reverse("callback")),
+        "razorpay_key": settings.RAZORPAY_KEY_ID,
+        "razorpay_order_id": razorpay_order['id'],
+        "game": game,
+        "razorpay_amount": game.price * 100,
+    }
+    response = render(request, "user/sec.html", context)
+    response['Cache-Control'] = 'no-store, no-cache, must-revalidate, max-age=0'
+    response['Pragma'] = 'no-cache'
+    return response
+    # return render(request, "user/sec.html", context)
+
+@csrf_exempt
+def callback(request):
+    if request.method == "POST":
+        client = razorpay.Client(auth=(settings.RAZORPAY_KEY_ID, settings.RAZORPAY_KEY_SECRET))
+        try:
+            payment_id = request.POST.get("razorpay_payment_id")
+            order_id = request.POST.get("razorpay_order_id")
+            signature = request.POST.get("razorpay_signature")
+            game_id = request.POST.get("game_id")
+
+            params_dict = {
+                'razorpay_order_id': order_id,
+                'razorpay_payment_id': payment_id,
+                'razorpay_signature': signature
+            }
+
+            client.utility.verify_payment_signature(params_dict)
+
+            game = get_object_or_404(Game, pk=game_id)
+            Purchase.objects.create(user=request.user, game=game)
+            
+            return JsonResponse({'status': 'Payment successful'})
+
+        except razorpay.errors.SignatureVerificationError:
+            return JsonResponse({'status': 'Payment failed due to signature verification error'})
+
+        except Exception as e:
+            return JsonResponse({'status': f'Payment failed: {str(e)}'})
+
+    return HttpResponseBadRequest("Invalid request method") 
+    
+
+
 def history(request):
     purchases = Purchase.objects.filter(user=request.user)
     downloads = DownloadHistory.objects.filter(user=request.user)

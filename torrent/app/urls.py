@@ -2,10 +2,12 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
+
+    path('',views.fake_index, name='fake_index'),
+
     path('login',views.login, name='login'),
     path('register',views.register),
     path('logout',views.logout),
-    path('',views.fake_index, name='fake_index'),
     path('fake_sec/<id>',views.fake_sec, name='fake_sec'),
     path('fake_search',views.fake_search, name='fake_search'),
 
@@ -44,4 +46,7 @@ urlpatterns = [
     path('delete_download/<id>',views.delete_download,name='delete_download'),
     path('search',views.search, name='search'),
 
+    path('order_payment/<game_id>', views.order_payment, name='order_payment'),
+    path('callback/', views.callback, name='callback'),
+    
 ]

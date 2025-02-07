@@ -560,7 +560,7 @@
             </div>
 
 
-            <div class="col-md-8">
+            <div class="col-md-8 mt-5">
               <div class="row align-items-center mb-4">
                 <div class="col">
                   <h2>Reviews</h2>
@@ -600,7 +600,7 @@
               <h2>Add Your Review</h2>
               <form class="review-form" action="../admin_add_review/{{ game.id }}" method="POST">
                 {% csrf_token %}
-                <input type="number" name="rating" placeholder="Rating (1-10)" required min="1" max="10">
+                <input type="number" name="rating" placeholder="Rating (1-10)" required min="1" max="10"  oninput="if(this.value > 10) this.value = 10; else if(this.value < 1) this.value = 1;">
                 <textarea placeholder="Your Review" name="comment" required></textarea>
                 {% if my_review %}
                   <button type="submit" class="btn btn-secondary" disabled>You already reviewed</button>

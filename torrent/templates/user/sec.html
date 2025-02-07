@@ -615,7 +615,7 @@
         </div>
       </div>
 
-      <div class="col-md-8">
+      <div class="col-md-8 mt-5">
         <div class="row align-items-center mb-4">
           <div class="col">
             <h2>Reviews</h2>
@@ -657,7 +657,7 @@
         <h2>Add Your Review</h2>
         <form class="review-form" action="../add_review/{{ game.id }}" method="POST">
           {% csrf_token %}
-          <input type="number" name="rating" placeholder="Rating (1-10)" required min="1" max="10">
+          <input type="number" name="rating" placeholder="Rating (1-10)" required min="1" max="10"  oninput="if(this.value > 10) this.value = 10; else if(this.value < 1) this.value = 1;">
           <textarea placeholder="Your Review" name="comment" required></textarea>
           {% if my_review %}
             <button type="submit" class="btn btn-secondary" disabled>You already reviewed</button>
@@ -671,9 +671,48 @@
     </div>
   </div>
   </div>
-
+  {% block content %}
+  <div class="pay">
+    <form method="POST">
+      {% csrf_token %}
+      <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+      <script>
+        var options = {
+          "key": "{{ razorpay_key }}", 
+          "amount": "{{ razorpay_amount }}",
+          "currency": "INR",
+          "name": "{{ game.title }}",
+          "description": "Payment for {{ game.title }}",
+          "image": "https://example.com/your_logo", 
+          "order_id": "{{ razorpay_order_id }}",
+          "callback_url": "{{ callback_url }}",
+          "redirect": true,
+          "prefill": {
+              "name": "{{ request.user.first_name }}",
+              "email": "{{ request.user.email }}",
+              "contact": ""  
+          },
+          "notes": {
+              "game_id": "{{ game.id }}"
+          },
+          "theme": {
+              "color": "#3399cc"
+          }
+        };
+        var rzp1 = new Razorpay(options);
+        rzp1.open();
+      </script>
+      <input type="hidden" name="hidden" value="hidden">
+    </form>
+  </div>
+  {% endblock %}
 
   <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+  <script>
+    window.history.replaceState(null, null, window.location.href);
+  </script>
+
   <script>
     AOS.init({ offset: 0 });
   </script>

@@ -194,52 +194,52 @@
     </nav>
 
 
-            <!-- <section id="contact" style="background-color: #000; color: #fff; padding: 50px 0;"> -->
-                <div id="container1" class="container">
-                    <h1 id="about" class="text-center mb-4" data-aos="zoom-in" data-aos-duration="1500">
-                        <i class="fa-solid fa-sign-in-alt"></i>&nbsp;&nbsp;Login
-                    </h1>
-
-                    {% if messages %}
-                    {% for message in messages %}
-                    <div class="alert alert-danger alert-dismissible">
-                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                         {{message}}
-                    </div>
-                     {% endfor %}
-                     {% endif %}
-                
-                    <form action="/" id="loginForm" method="post" style="max-width: 600px; margin: 0 auto;"
-                        data-aos="fade-in" data-aos-duration="1500">
-                        {% csrf_token %}
-                        <div class="mb-3">
-                            <label for="username" class="form-label" style="color: #fff;">Email</label>
-                            <input type="text" class="form-control" id="username" name="username" placeholder="Your Email"
-                                style="background-color: #222; color: #fff; border: 1px solid #077b32;" required>
-                        </div>
-                
-                        <div class="mb-3">
-                            <label for="password" class="form-label" style="color: #fff;">Password</label>
-                            <input type="password" class="form-control" id="password" name="password" placeholder="Enter Your Password"
-                                style="background-color: #222; color: #fff; border: 1px solid #077b32;" required>
-                        </div>
-                
-                        <div class="text-center d-flex justify-content-center flex-column">
-                            <button type="submit" id="button" class="btn"
-                                style="padding: 10px 20px; cursor: pointer; margin: 10px;">
-                                Login
-                            </button>
-                
-                            <a id="button1" href="../register" class="btn btn-link d-none d-sm-block" style="margin: 10px;">
-                                Don't have an account? Register
-                            </a>
-                
-                            <a id="button1" href="../register" class="btn btn-link d-block d-sm-none" style="margin: 10px;">
-                                Register
-                            </a>
-                        </div>
-                    </form>
+    <div id="container1" class="container">
+        <h1 id="about" class="text-center mb-4" data-aos="zoom-in" data-aos-duration="1500">
+            <i class="fa-solid fa-sign-in-alt"></i>&nbsp;&nbsp;Login
+        </h1>
+    
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-danger alert-dismissible">
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    {{ message }}
                 </div>
+            {% endfor %}
+        {% endif %}
+    
+        <form action="{% url 'login' %}" id="loginForm" method="post" style="max-width: 600px; margin: 0 auto;"
+              data-aos="fade-in" data-aos-duration="1500">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="username" class="form-label" style="color: #fff;">Email</label>
+                <input type="text" class="form-control" id="username" name="username" placeholder="Your Email"
+                       style="background-color: #222; color: #fff; border: 1px solid #077b32;" required>
+            </div>
+    
+            <div class="mb-3">
+                <label for="password" class="form-label" style="color: #fff;">Password</label>
+                <input type="password" class="form-control" id="password" name="password" placeholder="Enter Your Password"
+                       style="background-color: #222; color: #fff; border: 1px solid #077b32;" required>
+            </div>
+    
+            <div class="text-center d-flex justify-content-center flex-column">
+                <button type="submit" id="button" class="btn"
+                        style="padding: 10px 20px; cursor: pointer; margin: 10px;">
+                    Login
+                </button>
+    
+                <a id="button1" href=../register class="btn btn-link d-none d-sm-block" style="margin: 10px;">
+                    Don't have an account? Register
+                </a>
+    
+                <a id="button1" href=../register class="btn btn-link d-block d-sm-none" style="margin: 10px;">
+                    Register
+                </a>
+            </div>
+        </form>
+    </div>
+    
                 
 
 
