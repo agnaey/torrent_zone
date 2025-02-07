@@ -55,6 +55,53 @@ def register(req):
             return redirect(register)   
     else:
         return render(req,'register.html')
+    
+def fake_index(request):
+    games=Game.objects.all().order_by("?")
+    paid_games = Game.objects.filter(is_paid=True)
+    free_games = Game.objects.filter(is_paid=False)
+
+    return render(request, 'fake_index.html',{'games':games,'paid_games':paid_games,'free_games':free_games})
+
+def fake_sec(req,id):
+    game=Game.objects.get(id=id)
+    try:
+        requ = GameRequirement.objects.get(game=game)
+    except GameRequirement.DoesNotExist:
+        requ = None 
+
+    try:
+        review = Review.objects.filter(game=game)
+    except Review.DoesNotExist:
+        review = None
+    reviews = Review.objects.filter(game=game)
+    total_reviews = reviews.count()
+
+    average_rating = reviews.aggregate(Avg('rating'))['rating__avg'] or 0
+
+
+    my_review = Review.objects.filter(game=game, user=req.user).first() if req.user.is_authenticated else None
+    
+    
+    context = {
+        'game': game,
+        'requ': requ,
+        'reviews': reviews,
+        'my_review': my_review,
+        'total_reviews': total_reviews,
+        'average_rating': round(average_rating, 1),
+    }
+    
+    return render(req,'fake_sec.html',context)
+
+def fake_search(request):
+    if request.method == 'POST':
+        search = request.POST.get('search', '')  
+        results = Game.objects.filter(title__icontains=search) if search else []
+        return render(request, 'fake_search.html', {'search': search, 'results': results})
+    else:
+        return render(request, 'fake_search.html', {'search': '', 'results': []})
+
 
 # -----------admin---------------------
 
