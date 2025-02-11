@@ -28,7 +28,7 @@ urlpatterns = [
     path('delete_report/<id>',views.delete_report,name='delete_report'),
     path('admin_add_review/<id>',views.admin_add_review, name='admin_add_review'),
     path('admin_search',views.admin_search, name='admin_search'),
-
+    path('user_downloads', views.user_downloads, name='user_downloads'),
 
     # ----------user------------------------------
     path('index', views.index, name='index'),

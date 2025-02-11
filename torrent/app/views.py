@@ -62,6 +62,9 @@ def register(req):
         return render(req,'register.html')
     
 def fake_index(request):
+    if 'username' in request.session :
+        return redirect(index) 
+    
     games=Game.objects.all().order_by("?")
     paid_games = Game.objects.filter(is_paid=True)
     free_games = Game.objects.filter(is_paid=False)
@@ -343,6 +346,9 @@ def admin_search(request):
         return render(request, 'admin/admin_search.html', {'search': '', 'results': []})
     
 
+def user_downloads(request):
+    orders = Order.objects.filter(game__is_paid=True).order_by('-id')
+    return render(request, 'admin/admin_downloads.html', {'orders': orders})
 # --------------user--------------------
 
 def index(request):
@@ -443,20 +449,18 @@ def view_review(request, id):
 
 
 def buy_game(request, id):
-    game = Game.objects.get(pk=id)
-    
-    DownloadHistory.objects.create(user=request.user, game=game)
-            
-    file_path = game.torrent.path
+    game = get_object_or_404(Game, pk=id)
+    if game.price == 0.00:
+        DownloadHistory.objects.create(user=request.user, game=game)
+    else:
+        Purchase.objects.create(user=request.user, game=game)
+    file_path = game.torrent.path 
 
     if os.path.exists(file_path):
-                file = open(file_path, 'rb')
-                return FileResponse(file, as_attachment=True, filename=os.path.basename(file_path))
+        response = FileResponse(open(file_path, 'rb'), as_attachment=True, filename=os.path.basename(file_path))
+        return response
     else:
-                raise Http404("File not found.")
-
-    # else:
-    #     return redirect('history', game_id=game.id)
+        raise Http404("File not found.")
 
 
 
@@ -510,11 +514,11 @@ def callback(request):
         if not verify_signature(request.POST):
             order.status = PaymentStatus.SUCCESS
             order.save()
-            return redirect('buy_game') 
+            return redirect('buy_game',id=order.game.id) 
         else:
             order.status = PaymentStatus.FAILURE
             order.save()
-            return redirect("buy_game")
+            return redirect("buy_game",id=order.game.id)
 
     else:
         payment_id = json.loads(request.POST.get("error[metadata]")).get("payment_id")
@@ -526,7 +530,7 @@ def callback(request):
         order.status = PaymentStatus.FAILURE
         order.save()
 
-        return render(request, "user/history.html", context={"status": order.status})
+        return render(request, "user/history.html")
 
 
     
