@@ -9,6 +9,7 @@ from django.contrib.auth import authenticate,login as auth_login,logout as auth_
 from django.conf import settings
 from django.urls import reverse
 import razorpay
+import json
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse, HttpResponseBadRequest
 # Create your views here.
@@ -442,87 +443,98 @@ def view_review(request, id):
 
 
 def buy_game(request, id):
-    game = get_object_or_404(Game, pk=id)
+    game = Game.objects.get(pk=id)
     
-    if game.price == 0:
-            DownloadHistory.objects.create(user=request.user, game=game)
+    DownloadHistory.objects.create(user=request.user, game=game)
             
-            file_path = game.torrent.path
+    file_path = game.torrent.path
 
-            if os.path.exists(file_path):
+    if os.path.exists(file_path):
                 file = open(file_path, 'rb')
                 return FileResponse(file, as_attachment=True, filename=os.path.basename(file_path))
-            else:
+    else:
                 raise Http404("File not found.")
 
+    # else:
+    #     return redirect('history', game_id=game.id)
+
+
+
+def order_payment(req,id):
+    if 'username' in req.session:
+        user = User.objects.get(username=req.session['username'])
+        game = Game.objects.get(pk=id)
+        amount = game.price
+
+        client = razorpay.Client(auth=(settings.RAZORPAY_KEY_ID, settings.RAZORPAY_KEY_SECRET))
+        razorpay_order = client.order.create({
+            "amount": int(amount) * 100, 
+            "currency": "INR",
+            "payment_capture": "1"
+        })
+        order_id=razorpay_order['id']
+        order = Order.objects.create(
+            user=user,
+            game=game,
+            price=amount,
+            provider_order_id=order_id
+        )
+        order.save()
+
+        return render(req, "user/sec.html", {
+            "callback_url": "http://127.0.0.1:8000/callback/",
+            "razorpay_key": settings.RAZORPAY_KEY_ID,
+            "order": order,
+        })
     else:
-        return redirect('order_payment', game_id=game.id)
-
-
-
-def order_payment(request, game_id):
-    game = get_object_or_404(Game, pk=game_id)
-    
-    if game.price == 0:
-        DownloadHistory.objects.get_or_create(user=request.user, game=game)
-        return redirect('download_game', id=game.id)
-    
-    client = razorpay.Client(auth=(settings.RAZORPAY_KEY_ID, settings.RAZORPAY_KEY_SECRET))
-    razorpay_order = client.order.create({
-        "amount": game.price * 100, 
-        "currency": "INR",
-        "payment_capture": "1"
-    })
-
-    context = {
-        "callback_url": request.build_absolute_uri(reverse("callback")),
-        "razorpay_key": settings.RAZORPAY_KEY_ID,
-        "razorpay_order_id": razorpay_order['id'],
-        "game": game,
-        "razorpay_amount": game.price * 100,
-    }
-    response = render(request, "user/sec.html", context)
-    response['Cache-Control'] = 'no-store, no-cache, must-revalidate, max-age=0'
-    response['Pragma'] = 'no-cache'
-    return response
-    # return render(request, "user/sec.html", context)
+        return redirect('login') 
 
 @csrf_exempt
 def callback(request):
-    if request.method == "POST":
+
+    def verify_signature(response_data):
         client = razorpay.Client(auth=(settings.RAZORPAY_KEY_ID, settings.RAZORPAY_KEY_SECRET))
-        try:
-            payment_id = request.POST.get("razorpay_payment_id")
-            order_id = request.POST.get("razorpay_order_id")
-            signature = request.POST.get("razorpay_signature")
-            game_id = request.POST.get("game_id")
+        return client.utility.verify_payment_signature(response_data)
 
-            params_dict = {
-                'razorpay_order_id': order_id,
-                'razorpay_payment_id': payment_id,
-                'razorpay_signature': signature
-            }
+    if "razorpay_signature" in request.POST:
+        payment_id = request.POST.get("razorpay_payment_id", "")
+        provider_order_id = request.POST.get("razorpay_order_id", "")
+        signature_id = request.POST.get("razorpay_signature", "")
 
-            client.utility.verify_payment_signature(params_dict)
+        # Update Buy model with payment details
+        order = Order.objects.get(provider_order_id=provider_order_id)
+        order.payment_id = payment_id
+        order.signature_id = signature_id
+        order.save()
 
-            game = get_object_or_404(Game, pk=game_id)
-            Purchase.objects.create(user=request.user, game=game)
-            
-            return JsonResponse({'status': 'Payment successful'})
+        if not verify_signature(request.POST):
+            order.status = PaymentStatus.SUCCESS
+            order.save()
+            return redirect('buy_game') 
+        else:
+            order.status = PaymentStatus.FAILURE
+            order.save()
+            return redirect("buy_game")
 
-        except razorpay.errors.SignatureVerificationError:
-            return JsonResponse({'status': 'Payment failed due to signature verification error'})
+    else:
+        payment_id = json.loads(request.POST.get("error[metadata]")).get("payment_id")
+        provider_order_id =json.loads(request.POST.get("error[metadata]")).get(
+            "order_id"
+        )
+        order = Order.objects.get(provider_order_id=provider_order_id)
+        # order.payment_id = payment_id
+        order.status = PaymentStatus.FAILURE
+        order.save()
 
-        except Exception as e:
-            return JsonResponse({'status': f'Payment failed: {str(e)}'})
+        return render(request, "user/history.html", context={"status": order.status})
 
-    return HttpResponseBadRequest("Invalid request method") 
+
     
 
 
 def history(request):
-    purchases = Purchase.objects.filter(user=request.user)
-    downloads = DownloadHistory.objects.filter(user=request.user)
+    purchases = Purchase.objects.filter(user=request.user)[::-1]
+    downloads = DownloadHistory.objects.filter(user=request.user)[::-1]
     context = {
         'purchases': purchases,
         'downloads': downloads,

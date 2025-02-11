@@ -1,6 +1,10 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.views.generic.list import ListView
+from .constants import PaymentStatus
+from django.db.models.fields import CharField
+from django.utils.translation import gettext_lazy as _
+
 
 
 
@@ -79,13 +83,29 @@ class DownloadHistory(models.Model):
         return f"{self.user.username} downloaded {self.game.title}"
 
 
-# class DownloadHistoryView(ListView):
-#     model = DownloadHistory
-#     template_name = "user_downloads.html"
+class Order(models.Model):
+    user=models.ForeignKey(User,on_delete=models.CASCADE)
+    game=models.ForeignKey(Game,on_delete=models.CASCADE)
+    price=models.IntegerField()
+    status=CharField(
+        _("Payment Status"),
+        default=PaymentStatus.PENDING,
+        max_length=254,
+        blank=False,
+        null=False
+    )
+    provider_order_id = models.CharField(
+        _("Order ID"), max_length=40, null=False,blank=False
+    )
+    payment_id = models.CharField(
+        _("Payment ID"),max_length=36, null=False, blank=False
+    )
+    signature_id = models.CharField(
+        _("Signature ID"), max_length=128, null=False, blank=False
+    )
 
-#     def get_queryset(self):
-#         return DownloadHistory.objects.filter(user=self.request.user)
-
+    def __str__(self):
+        return f"{self.id}-{self.name}-{self.status}"
 
 
 

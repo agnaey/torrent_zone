@@ -46,7 +46,7 @@ urlpatterns = [
     path('delete_download/<id>',views.delete_download,name='delete_download'),
     path('search',views.search, name='search'),
 
-    path('order_payment/<game_id>', views.order_payment, name='order_payment'),
+    path('order_payment/<id>', views.order_payment, name='order_payment'),
     path('callback/', views.callback, name='callback'),
     
 ]
