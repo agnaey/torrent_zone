@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from .models import *
 import os
 from django.core.mail import send_mail
-from django.http import FileResponse, Http404
+from django.http import FileResponse, Http404,HttpResponseRedirect
 from django.db.models import Avg
 from django.contrib import messages
 from django.contrib.auth import authenticate,login as auth_login,logout as auth_logout
@@ -407,6 +407,9 @@ def view_cart(request):
     total_price = sum(item.total_price() for item in cart)
     return render(request, 'user/cart.html', {'cart': cart,'total_price':total_price})
 
+def all_download(req):
+    game = Cart.objects.all()
+    return render(req,'user/all_download.html',{'game':game})
 
 def order_payment2(req):
     if 'username' in req.session:
@@ -435,7 +438,8 @@ def order_payment2(req):
         return render(req, "user/cart.html", {
             "callback_url": "http://127.0.0.1:8000/callback2/",
             "razorpay_key": settings.RAZORPAY_KEY_ID,
-            "price": amount,
+            "price": amount*100,
+            "order_id": order_id
         })
     else:
         return redirect('login') 
@@ -446,8 +450,9 @@ def callback2(request):
     def verify_signature(response_data):
         client = razorpay.Client(auth=(settings.RAZORPAY_KEY_ID, settings.RAZORPAY_KEY_SECRET))
         return client.utility.verify_payment_signature(response_data)
-
+    print('user out')
     if "razorpay_signature" in request.POST:
+        print('user in')
         payment_id = request.POST.get("razorpay_payment_id", "")
         provider_order_id = request.POST.get("razorpay_order_id", "")
         signature_id = request.POST.get("razorpay_signature", "")
@@ -467,7 +472,7 @@ def callback2(request):
             else:
                 i.status = PaymentStatus.FAILURE
             i.save()
-        return redirect("buy_all")
+        return redirect("all_download")
 
     else:
         payment_id = json.loads(request.POST.get("error[metadata]")).get("payment_id")
@@ -539,6 +544,10 @@ def buy_game(request, id):
         return response
     else:
         raise Http404("File not found.")
+
+def download(req,id):
+    game = get_object_or_404(Game, pk=id)
+    return render(req,'user/download.html',{'game':game})
 
 
 def buy_all(request):
@@ -625,11 +634,11 @@ def callback(request):
         if not verify_signature(request.POST):
             order.status = PaymentStatus.SUCCESS
             order.save()
-            return redirect('buy_game',id=order.game.id) 
+            return redirect('download',id=order.game.id) 
         else:
             order.status = PaymentStatus.FAILURE
             order.save()
-            return redirect("buy_game",id=order.game.id)
+            return redirect("download",id=order.game.id)
 
     else:
         payment_id = json.loads(request.POST.get("error[metadata]")).get("payment_id")

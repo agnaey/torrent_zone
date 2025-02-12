@@ -43,6 +43,10 @@ urlpatterns = [
     path('delete_review/<id>',views.delete_review, name='delete_review'),
     path('view_review/<id>',views.view_review, name='view_review'),
     path('buy/<id>/', views.buy_game, name='buy_game'),
+    path('download/<id>',views.download,name='download'),
+    path('all_download',views.all_download,name='all_download'),
+
+
     path('buy_all', views.buy_all, name='buy_all'),
 
     path('history', views.history, name='history'),

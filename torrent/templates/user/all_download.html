@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <style>
+        
+    </style>
+</head>
+<body>
+    <!-- <p>Your download should start automatically. If not, <a href="{{ file_url }}">click here</a>.</p> -->
+    <form action="{% url 'buy_all'  %}" method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn custom-button w-100">Download From HERE</button>
+      </form>
+</body>
+</html>
