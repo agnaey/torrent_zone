@@ -236,6 +236,14 @@
                 <a id="button1" href=../register class="btn btn-link d-block d-sm-none" style="margin: 10px;">
                     Register
                 </a>
+              
+            </div>
+        </form>
+        <form method="post" action="{% url 'password_reset' %}">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <div class="text-center mt-3">
+                <button class="me-auto" type="submit" style="background: none; border: none; color: rgb(105, 105, 216); text-decoration: underline; cursor: pointer;">Forgot Password</button>
             </div>
         </form>
     </div>

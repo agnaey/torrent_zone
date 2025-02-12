@@ -1,5 +1,7 @@
 from django.urls import path
 from . import views
+from django.contrib.auth import views as auth_views
+
 
 urlpatterns = [
 
@@ -41,6 +43,8 @@ urlpatterns = [
     path('delete_review/<id>',views.delete_review, name='delete_review'),
     path('view_review/<id>',views.view_review, name='view_review'),
     path('buy/<id>/', views.buy_game, name='buy_game'),
+    path('buy_all', views.buy_all, name='buy_all'),
+
     path('history', views.history, name='history'),
     path('delete_purchase/<id>', views.delete_purchase, name='delete_purchase'),
     path('delete_download/<id>',views.delete_download,name='delete_download'),
@@ -48,5 +52,13 @@ urlpatterns = [
 
     path('order_payment/<id>', views.order_payment, name='order_payment'),
     path('callback/', views.callback, name='callback'),
+
+    path('order_payment2', views.order_payment2, name='order_payment2'),
+    path('callback2/', views.callback2, name='callback2'),
+
+    path('password_reset/', auth_views.PasswordResetView.as_view(template_name='password_reset_form.html'), name='password_reset'),
+    path('password_reset/done/', auth_views.PasswordResetDoneView.as_view(template_name='password_reset_form.html', extra_context={'reset_done': True}), name='password_reset_done'),
+    path('reset/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(template_name='password_reset_form.html'), name='password_reset_confirm'),
+    path('reset/done/', auth_views.PasswordResetCompleteView.as_view(template_name='password_reset_form.html', extra_context={'reset_complete': True}), name='password_reset_complete'),
     
 ]

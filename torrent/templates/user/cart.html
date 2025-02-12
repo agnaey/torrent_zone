@@ -293,11 +293,48 @@
                     <span>Subtotal</span>
                     <strong>₹{{ total_price }}</strong>
                 </p>
-                <!-- <button class="btn btn-checkout fw-bold py-2">Check Out</button> -->
+                <form method="POST" action="{% url 'order_payment2' %}">
+                  {% csrf_token %}
+                <button class="btn btn-checkout fw-bold py-2">Check Out</button>
+                </form>
             </div>
         </div>
         </div>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+        {% block content %}
+
+        <form method="POST">
+          <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+          <script>
+              var options={
+                  key: "{{razorpay_key}}",
+                  amount: "{{price}}",
+                  currency: "INR",
+                  name: "asd",
+                  description: "Test Transaction",
+                  image: "https://example.com/your_logo",
+                  order_id: "{{order.provider_order_id}}",
+                  callback_url:"{{callback_url}}",
+                  redirect: true,
+                  prefill:{
+                      "name": "tutu",
+                      "email": "tutuv402@gmail.com",
+                      "contact": "8654634654",
+                  },
+                  notes:{
+                      "address": "Razorpay Corporate Office"
+                  },
+                  theme:{
+                      "color": "#3399cc"
+                  }
+              };
+              var rzpl = new Razorpay(options);
+              rzpl.open();
+          </script>
+          <input type="hidden" custom="Hidden Element" name="hidden">
+      </form>
+      {% endblock %}
 
 <script>
         document.addEventListener('DOMContentLoaded', function() {

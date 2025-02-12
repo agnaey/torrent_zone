@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect,get_object_or_404
 from django.contrib.auth.decorators import login_required
 from .models import *
 import os
+from django.core.mail import send_mail
 from django.http import FileResponse, Http404
 from django.db.models import Avg
 from django.contrib import messages
@@ -10,6 +11,8 @@ from django.conf import settings
 from django.urls import reverse
 import razorpay
 import json
+import io
+import zipfile
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse, HttpResponseBadRequest
 # Create your views here.
@@ -49,7 +52,7 @@ def register(req):
         username = req.POST['username']
         email = req.POST['Email']
         password = req.POST['password']
-        # send_mail('Flipkart','Flipkart Account Created Successfully',settings.EMAIL_HOST_USER,[email])
+        send_mail('GAME HAVEN','GAME HAVEN Account Created Successfully',settings.EMAIL_HOST_USER,[email])
         try:
             data=User.objects.create_user(first_name=username,username=email,email=email,password=password)
             data.save()
@@ -400,9 +403,84 @@ def add_to_cart(request, id):
 
 @login_required(login_url='login') 
 def view_cart(request):
-    cart= Cart.objects.filter(user=request.user)
+    cart= Cart.objects.filter(user=request.user)[::-1]
     total_price = sum(item.total_price() for item in cart)
     return render(request, 'user/cart.html', {'cart': cart,'total_price':total_price})
+
+
+def order_payment2(req):
+    if 'username' in req.session:
+        user = User.objects.get(username=req.session['username'])
+        cart_item = Cart.objects.filter(user=user)
+        amount = sum(item.total_price() for item in cart_item)
+        print(amount)
+        client = razorpay.Client(auth=(settings.RAZORPAY_KEY_ID, settings.RAZORPAY_KEY_SECRET))
+        razorpay_order = client.order.create({
+            "amount": int(amount) * 100, 
+            "currency": "INR",
+            "payment_capture": "1"
+        })
+        order_id=razorpay_order['id']
+        price = 0
+        for i in cart_item:
+            price+=i.game.price
+            order = Order.objects.create(
+                user=user,
+                game=i.game,
+                price=i.game.price,
+                provider_order_id=order_id
+            )
+            order.save()
+
+        return render(req, "user/cart.html", {
+            "callback_url": "http://127.0.0.1:8000/callback2/",
+            "razorpay_key": settings.RAZORPAY_KEY_ID,
+            "price": amount,
+        })
+    else:
+        return redirect('login') 
+
+@csrf_exempt
+def callback2(request):
+
+    def verify_signature(response_data):
+        client = razorpay.Client(auth=(settings.RAZORPAY_KEY_ID, settings.RAZORPAY_KEY_SECRET))
+        return client.utility.verify_payment_signature(response_data)
+
+    if "razorpay_signature" in request.POST:
+        payment_id = request.POST.get("razorpay_payment_id", "")
+        provider_order_id = request.POST.get("razorpay_order_id", "")
+        signature_id = request.POST.get("razorpay_signature", "")
+
+        # Update Buy model with payment details
+        order = Order.objects.filter(provider_order_id=provider_order_id)
+        for i in order:
+
+            i.payment_id = payment_id
+            i.signature_id = signature_id
+            # i.save()
+
+            if not verify_signature(request.POST):
+                i.status = PaymentStatus.SUCCESS
+                # i.save()
+                # return redirect('buy_all') 
+            else:
+                i.status = PaymentStatus.FAILURE
+            i.save()
+        return redirect("buy_all")
+
+    else:
+        payment_id = json.loads(request.POST.get("error[metadata]")).get("payment_id")
+        provider_order_id =json.loads(request.POST.get("error[metadata]")).get(
+            "order_id"
+        )
+        order = Order.objects.get(provider_order_id=provider_order_id)
+        for i in order:
+        # order.payment_id = payment_id
+            i.status = PaymentStatus.FAILURE
+            i.save()
+
+        return render(request, "user/history.html")
 
 def remove_cart(request, id):
     cart = Cart.objects.get(id=id)
@@ -462,6 +540,39 @@ def buy_game(request, id):
     else:
         raise Http404("File not found.")
 
+
+def buy_all(request):
+    if not request.user.is_authenticated:
+        return redirect('login')
+    
+    cart_items = Cart.objects.filter(user=request.user)
+    
+    if not cart_items.exists():
+        messages.error(request, "Your cart is empty.")
+        return redirect('cart') 
+    
+    for item in cart_items:
+        game = item.game
+        if game.price == 0.00:
+            DownloadHistory.objects.create(user=request.user, game=game)
+        else:
+            Purchase.objects.create(user=request.user, game=game)
+    
+    zip_buffer = io.BytesIO()
+    with zipfile.ZipFile(zip_buffer, 'w') as zip_file:
+        for item in cart_items:
+            game = item.game
+            file_path = game.torrent.path
+            if os.path.exists(file_path):
+                zip_file.write(file_path, arcname=os.path.basename(file_path))
+            else:
+                raise Http404(f"File for {game} not found.")
+    
+    cart_items.delete()
+    
+    zip_buffer.seek(0)
+    response = FileResponse(zip_buffer, as_attachment=True, filename="purchased_games.zip")
+    return response
 
 
 def order_payment(req,id):

@@ -131,5 +131,12 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_URL = 'login'
 
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'agnaeyviswanath1234@gmail.com'
+EMAIL_HOST_PASSWORD = 'ykis kvmy dygd orhg'
+
 RAZORPAY_KEY_ID= 'rzp_test_sOuTt2Y2KdTlzd'
 RAZORPAY_KEY_SECRET= 'qFSPIaB548Eh9a7TpKdtJcUn'
