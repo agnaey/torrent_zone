@@ -1,16 +1,387 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
     <style>
-        
+           body {
+      background-color: black;
+      color: white;
+    }
+
+    nav {
+      width: 100%;
+      height: 10vh;
+      position: -webkit-sticky;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background-color: inherit;
+    }
+
+    .nav-container {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+    }
+
+    .navbar-brand {
+      color: white;
+      font-size: 2rem;
+      font-weight: bold;
+    }
+
+    span {
+      color: #077b32;
+      text-shadow: 0 0 10px #077b32;
+    }
+
+
+    .nav-container .links {
+      display: flex;
+    }
+
+    .nav-link {
+      position: relative;
+      font-size: 1.2rem;
+      color: white;
+      margin: 0 20px;
+      text-decoration: none;
+      font-weight: 550;
+      transition: 0.3s linear;
+    }
+
+    .navbar-nav .nav-link::before {
+      position: absolute;
+      content: "";
+      bottom: -3px;
+      left: 0;
+      width: 0%;
+      height: 3px;
+      background-color: #077b32;
+      transition: 0.2s linear;
+    }
+
+    .navbar-nav .nav-link:hover::before {
+      width: 100%;
+    }
+
+    .navbar-nav .nav-link:hover {
+      color: #077b32;
+    }
+
+    section {
+      width: 100%;
+      height: 90vh;
+    }
+
+    .main-container {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: space-evenly;
+      align-items: center;
+    }
+
+    .main-container .image {
+      width: 500px;
+      height: 80vh;
+      border-radius: 100%;
+      overflow: hidden;
+      box-shadow: 0 0 50px #077b32;
+    }
+
+    .main-container .content {
+      color: white;
+      width: 70%;
+      text-align: center;
+      min-height: 100px;
+    }
+
+    .content h1 {
+      font-size: clamp(1rem, 1rem + 5vw, 1.8rem);
+    }
+
+    .content h1 span {
+      color: #077b32;
+      text-shadow: 0 0 10px #077b32;
+    }
+
+    .content .typewriter {
+      font-size: clamp(1rem, 1rem + 5vw, 2.5rem);
+      margin-top: 20px;
+      margin-bottom: 20px;
+      font-weight: 600;
+    }
+
+    .content .typewriter-text {
+      margin-top: 20px;
+      color: #077b32;
+      text-shadow: 0 0 10px #077b32;
+    }
+
+    #button {
+      text-decoration: none;
+      padding: 20px 70px;
+      margin-top: 30px;
+      margin: 20px;
+      background-color: #077b32;
+      color: black;
+      border: none;
+      outline: none;
+      font-size: 120%;
+      font-weight: 700;
+      border-radius: 5px;
+      transition: 0.2s linear;
+    }
+
+    #button:hover {
+      scale: 1.1;
+      color: #077b32;
+      border: 2px solid #077b32;
+      background-color: transparent;
+      font-weight: 700;
+      box-shadow: 0 0 40px #077b32;
+    }
+
+    .card-img-top {
+      height: 260px;
+      object-fit: cover;
+    }
+
+
+    .custom-green {
+      background-color: #077b32;
+    }
+
+    .custom-card {
+      background-color: rgba(0, 0, 0, 0.5);
+      color: white;
+      border: none;
+    }
+
+    .custom-button {
+      background-color: #077b32;
+      color: black;
+    }
+
+    .custom-button:hover {
+      background-color: #065f29;
+    }
+
+    .custom-outline-button {
+      border-color: rgb(247, 6, 6);
+      color: white;
+    }
+
+    .custom-outline-button:hover {
+      background-color: #2a2a2a;
+      color: white;
+    }
+
+    .thumbnail {
+      width: 80px;
+      height: 50px;
+      background-color: #077b32;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      font-size: 14px;
+      border-radius: 5px;
+    }
+
+    .divider {
+      border-top: 1px solid gray;
+      margin: 20px 0;
+    }
+
+  
+    #brand-link::after {
+      content: " ZONE";
+    }
+
+    @media (max-width: 768px) {
+      #brand-link::after {
+        content: "";
+      }
+    }
+    .full-width.search_ {
+  position: fixed;
+  width: 100%;
+  box-sizing: border-box;
+  top: -100px; 
+  background-color: black;
+  padding: 10px 100px;
+  transition: top 0.3s ease-in-out;
+  z-index: 1050;
+}
+
+.full-width.search_.active {
+  top: 70px; 
+}
+
+.search-form {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.search-form input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  outline: none;
+  background-color: #D3D3D3;
+  color: black;
+  font-size: 120%;
+  font-weight: 700;
+  transition: 0.2s linear;
+}
+
+@media (max-width: 991px) {
+    .navbar-collapse {
+        background-color: black;
+    }
+}
+
     </style>
 </head>
 <body>
-    <!-- <p>Your download should start automatically. If not, <a href="{{ file_url }}">click here</a>.</p> -->
-    <form action="{% url 'buy_game' game.id %}" method="post">
+    <nav style="position: fixed;" class="navbar navbar-expand-lg">
+        <div class="nav-container container">
+          <a id="brand-link" class="navbar-brand text-white" data-aos="zoom-in" data-aos-duration="1500" href="#">
+            <span>GAME</span>
+          </a>
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarNav"
+            aria-controls="navbarNav"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+            style="background-color: white;"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+            <ul class="navbar-nav">
+              <li class="nav-item" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="100">
+                <a class="nav-link" href="../index">Home</a>
+              </li>
+              <li class="nav-item" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="200">
+                <a class="nav-link" href="../cart">Cart</a>
+              </li>
+              <li class="nav-item" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="300">
+                <a class="nav-link" href="../history">History</a>
+              </li>
+              <!-- Add an id for the search button -->
+              <li class="nav-item" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="400">
+                <a id="nav-search-btn" class="nav-link" href="#">Search</a>
+              </li>
+              <li class="nav-item" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="500">
+                <a class="nav-link" href="../logout"><span>Logout</span></a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+
+
+      <form id="search-form" method="POST" action="{% url 'search' %}">
         {% csrf_token %}
-        <button type="submit" class="btn custom-button w-100">Download From HERE</button>
+        <div class="full-width search_ p-4">
+          <div class="search-form">
+            <input type="text" name="search" id="search" placeholder="Search">
+          </div>
+        </div>
       </form>
+
+
+
+  <div class="container py-5 mt-5">
+    <div class="row ">
+      <!-- Left Section -->
+      <div class="col-md-8">
+        <div class="ratio ratio-16x9 d-flex justify-content-center align-items-center rounded">
+          <img src="{{ game.image.url }}" style="border-radius: 10px;" alt="">
+        </div>
+
+        <!-- New Section -->
+        <div class="mt-5">
+          <h3 class="mb-3">{{ game.title }}</h3>
+          <p class="text-white">
+            {{ game.des }}
+          </p>
+          <div class="row">
+            <div class="col-md-6">
+              <h6>Genres</h6>
+              <span class="badge bg-secondary">{{ game.genre }}</span>
+              <!-- <span class="badge bg-secondary">City Builder</span>
+                  <span class="badge bg-secondary">Narration</span> -->
+            </div>
+            <div class="col-md-6">
+              <h6>Features</h6>
+              <span class="badge bg-secondary">Single Player</span>
+              <span class="badge bg-secondary">Multi Player</span>
+
+            </div>
+          </div>
+ 
+        </div>
+
+
+      </div>
+
+      <!-- Right Section -->
+      <div class="col-md-4">
+        <div class="card custom-card p-3">
+          <h1 class="h4">{{ game.title }}</h1>
+          <p class="text-white small mt-2">
+            {{ game.description }}
+
+          </p>
+
+
+          <form action="{% url 'buy_game' game.id %}" method="post">
+            {% csrf_token %}
+            <button id="button" type="submit" class="btn custom-button  w-100 ">Download From HERE</button>
+          </form>
+        </div>
+       
+       
+    <!-- <p>Your download should start automatically. If not, <a href="{{ file_url }}">click here</a>.</p> -->
+ 
+    </div>
+
+
+
 </body>
+
+
+
+<script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script>
+    AOS.init({ offset: 0 });
+  </script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        const searchBtn = document.getElementById('nav-search-btn');
+        const searchBar = document.querySelector('.full-width.search_');
+    
+        searchBtn.addEventListener('click', function(e) {
+          e.preventDefault();
+          searchBar.classList.toggle('active');
+        });
+      });
+    </script>
 </html>

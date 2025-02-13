@@ -293,10 +293,15 @@
                     <span>Subtotal</span>
                     <strong>₹{{ total_price }}</strong>
                 </p>
+                {% if cart %}
                 <form method="POST" action="{% url 'order_payment2' %}">
-                  {% csrf_token %}
-                <button class="btn btn-checkout fw-bold py-2">Check Out</button>
+                    {% csrf_token %}
+                    <button class="btn btn-checkout fw-bold py-2">Check Out</button>
                 </form>
+            {% else %}
+                <button class="btn btn-checkout fw-bold py-2" disabled>Cart is Empty</button>
+            {% endif %}
+            
             </div>
         </div>
         </div>

@@ -352,6 +352,11 @@ def admin_search(request):
 def user_downloads(request):
     orders = Order.objects.filter(game__is_paid=True).order_by('-id')
     return render(request, 'admin/admin_downloads.html', {'orders': orders})
+
+def delete_report(req,id):
+    report = Order.objects.get(pk=id)
+    report.delete()
+    return redirect('user_downloads')
 # --------------user--------------------
 
 def index(request):
@@ -409,7 +414,9 @@ def view_cart(request):
 
 def all_download(req):
     game = Cart.objects.all()
-    return render(req,'user/all_download.html',{'game':game})
+    cart_items = Cart.objects.filter(user=req.user)
+
+    return render(req,'user/all_download.html',{'game':game,'cart_items':cart_items})
 
 def order_payment2(req):
     if 'username' in req.session:
@@ -557,7 +564,6 @@ def buy_all(request):
     cart_items = Cart.objects.filter(user=request.user)
     
     if not cart_items.exists():
-        messages.error(request, "Your cart is empty.")
         return redirect('cart') 
     
     for item in cart_items:
