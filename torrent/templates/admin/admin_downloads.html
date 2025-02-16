@@ -241,9 +241,14 @@
                     {{ i.game.title }}
                   </a>
                 </td>
-                <td>{{ i.game.price }}</td>
+                <td>
+                  {{ i.game.price }}</td>
                 <!-- <td>{{ i.purchase_date|date:"Y-m-d" }}</td> -->
-                <td>{{ i.status }}</td>
+                <td>
+                  <p><strong>Order ID:</strong> {{ i.provider_order_id }}</p>
+           
+                  <p><strong>Status:</strong> {{ i.status }}</p>
+                  </td>
                 <td>
                   <a href="../delete_report/{{ i.id }}" 
                      onclick="return confirm('Are you sure you want to delete this report?')"
