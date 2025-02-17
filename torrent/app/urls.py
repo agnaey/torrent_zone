@@ -32,6 +32,7 @@ urlpatterns = [
     path('admin_search',views.admin_search, name='admin_search'),
     path('user_downloads', views.user_downloads, name='user_downloads'),
     path('delete_report/<id>',views.delete_report,name='delete_report'),
+    path('resolve_report/<report_id>',views.resolve_report,name='resolve_report'),
 
     # ----------user------------------------------
     path('index', views.index, name='index'),

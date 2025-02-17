@@ -221,15 +221,24 @@
       
         <!-- Responsive Table Wrapper -->
         <div class="table-responsive">
+          
           <table class="table table-dark table-hover table-bordered table-sm text-center align-middle">
+            
             <thead class="table-secondary">
+              <!-- Total Profit Row -->
+<tr class="table-secondary">
+  <td colspan="5" class="text-end text-center"><strong>Total Profit Earned:</strong>
+ <strong>₹{{ total_profit }}</strong></td>
+</tr>
+
+              
               <tr>
                 <th style="width: 15%;">User</th>
                 <th style="width: 30%;">Game</th>
                 <th style="width: 10%;">Price</th>
                 <!-- <th style="width: 20%;">Downloaded At</th> -->
                 <th style="width: 15%;">Status</th>
-                <th style="width: 10%;">Actions</th>
+                <!-- <th style="width: 10%;">Actions</th> -->
               </tr>
             </thead>
             <tbody>
@@ -249,13 +258,13 @@
            
                   <p><strong>Status:</strong> {{ i.status }}</p>
                   </td>
-                <td>
-                  <a href="../delete_report/{{ i.id }}" 
+                <!-- <td>
+                  <a href="../delete_download/{{ i.id }}" 
                      onclick="return confirm('Are you sure you want to delete this report?')"
                      class="btn btn-sm btn-danger">
                     Delete
                   </a>
-                </td>
+                </td> -->
               </tr>
               {% empty %}
               <tr>

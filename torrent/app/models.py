@@ -69,6 +69,7 @@ class Report(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     game = models.ForeignKey(Game, on_delete=models.CASCADE)
     issue = models.TextField()
+    resolved = models.BooleanField(default=False) 
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

@@ -1,284 +1,288 @@
-
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Report</title>
-    {% load static %}
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Report</title>
+  {% load static %}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <style>
+  body {
+    background-color: black;
+    color: white;
+  }
 
+  nav {
+    width: 100%;
+    height: 10vh;
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background-color: inherit;
+  }
 
-            body{
-            background-color: black;
-            color: white;
-        }
-        
-        nav {
-            width: 100%;
-            height: 10vh;
-            position: -webkit-sticky;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            background-color: inherit;
-        }
+  .nav-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
 
-        .nav-container {
-            width: 100%;
-            height: 100%;
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-        }
-        .nav-link:active,
-.nav-link:focus {
+  .nav-link:active,
+  .nav-link:focus {
     color: white;
     background-color: transparent;
     outline: none;
-}
-        .navbar-brand {
-            color: white;
-            font-size: 2rem;
-            font-weight: bold;
-        }
+  }
 
-        #navbarNav{
+  .navbar-brand {
+    color: white;
+    font-size: 2rem;
+    font-weight: bold;
+  }
+
+  #navbarNav {
     background-color: black;
-}
+  }
 
 
-        span {
-            color: #077b32;
-            text-shadow: 0 0 10px #077b32;
-        }
+  span {
+    color: #077b32;
+    text-shadow: 0 0 10px #077b32;
+  }
 
 
-        .nav-container .links {
-            display: flex;
-        }
+  .nav-container .links {
+    display: flex;
+  }
 
-        .nav-link{
-            position: relative;
-            font-size: 1.2rem;
-            color: white;
-            margin: 0 20px;
-            text-decoration: none;
-            font-weight: 550;
-            transition: 0.3s linear;
-        }
+  .nav-link {
+    position: relative;
+    font-size: 1.2rem;
+    color: white;
+    margin: 0 20px;
+    text-decoration: none;
+    font-weight: 550;
+    transition: 0.3s linear;
+  }
 
-        .navbar-nav .nav-link::before {
-  position: absolute;
-  content: "";
-  bottom: -3px;
-  left: 0;
-  width: 0%;
-  height: 3px;
-  background-color: #077b32;
-  transition: 0.2s linear;
-}
+  .navbar-nav .nav-link::before {
+    position: absolute;
+    content: "";
+    bottom: -3px;
+    left: 0;
+    width: 0%;
+    height: 3px;
+    background-color: #077b32;
+    transition: 0.2s linear;
+  }
 
-.navbar-nav .nav-link:hover::before {
-  width: 100%;
-}
+  .navbar-nav .nav-link:hover::before {
+    width: 100%;
+  }
 
-.navbar-nav .nav-link:hover {
-  color: #077b32;
-}
-    table { 
-      width: 100%;
+  .navbar-nav .nav-link:hover {
+    color: #077b32;
+  }
+
+  table {
+    width: 100%;
     border-collapse: collapse;
     background-color: black;
     border: 5px solid #000000;
     box-shadow: 0 0 10px #000000;
     border-radius: 10px;
     overflow: hidden;
+  }
+
+  @media (max-width: 768px) {
+    #brand-link::after {
+      content: "";
     }
+  }
 
-    @media (max-width: 768px) {
-      #brand-link::after {
-        content: "";
-      }
+
+  .full-width.search_ {
+    position: fixed;
+    width: 100%;
+    box-sizing: border-box;
+    top: -100px;
+    background-color: black;
+    padding: 10px 100px;
+    transition: top 0.3s ease-in-out;
+    z-index: 1050;
+  }
+
+  .full-width.search_.active {
+    top: 70px;
+  }
+
+  .search-form {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+
+  .search-form input {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    outline: none;
+    background-color: #D3D3D3;
+    color: black;
+    font-size: 120%;
+    font-weight: 700;
+    transition: 0.2s linear;
+  }
+
+  #brand-link::after {
+    content: " HAVEN";
+  }
+
+  @media (max-width: 768px) {
+    #brand-link::after {
+      content: "";
     }
+  }
 
-
-    .full-width.search_ {
-  position: fixed;
-  width: 100%;
-  box-sizing: border-box;
-  top: -100px; 
-  background-color: black;
-  padding: 10px 100px;
-  transition: top 0.3s ease-in-out;
-  z-index: 1050;
-}
-
-.full-width.search_.active {
-  top: 70px; 
-}
-
-.search-form {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-
-.search-form input {
-  width: 100%;
-  padding: 10px;
-  border-radius: 5px;
-  border: none;
-  outline: none;
-  background-color: #D3D3D3;
-  color: black;
-  font-size: 120%;
-  font-weight: 700;
-  transition: 0.2s linear;
-}
-#brand-link::after {
-      content: " HAVEN";
-    }
-
-    @media (max-width: 768px) {
-      #brand-link::after {
-        content: "";
-      }
-    }
-
-    @media (max-width: 991px) {
+  @media (max-width: 991px) {
     .navbar-collapse {
-        background-color: black;
+      background-color: black;
     }
-}
-
-    </style>
+  }
+</style>
 </head>
+
 <body>
-    <nav style="position: fixed;" class="navbar navbar-expand-lg">
-        <div class="nav-container container">
-            <a id="brand-link" class="navbar-brand text-white" data-aos="zoom-in" data-aos-duration="1500" href="#">
-                <span>GAME</span>
-              </a>
-          <button
-            class="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarNav"
-            aria-controls="navbarNav"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-            style="background-color: white;"
-          >
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-            <ul class="navbar-nav">
-              <li class="nav-item" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="100">
-                <a class="nav-link" href="../admin_home">Home</a>
-              </li>
-              <li class="nav-item" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="200">
-                <a class="nav-link" href="../add_game">Add Games</a>
-              </li>
-              <li class="nav-item" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="300">
-                <a class="nav-link" href="../view_all_report">Report</a>
-              </li>
-              <li class="nav-item" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="300">
-                <a class="nav-link" href="../user_downloads">User Downloads</a>
-              </li>
-     
-              <li class="nav-item" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="400">
-                <a id="nav-search-btn" class="nav-link" href="#">Search</a>
-              </li>
-              <li class="nav-item" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="500">
-                <a class="nav-link" href="../logout"><span>Logout</span></a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </nav>
-      
-      <form id="search-form" method="POST" action="{% url 'admin_search' %}">
-        {% csrf_token %}
-        <div class="full-width search_ p-4">
-          <div class="search-form">
-            <input type="text" name="search" id="search" placeholder="Search">
-          </div>
-        </div>
-      </form>
+  <nav style="position: fixed;" class="navbar navbar-expand-lg">
+    <div class="nav-container container">
+      <a id="brand-link" class="navbar-brand text-white" data-aos="zoom-in" data-aos-duration="1500" href="#">
+        <span>GAME</span>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation" style="background-color: white;">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="100">
+            <a class="nav-link" href="../admin_home">Home</a>
+          </li>
+          <li class="nav-item" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="200">
+            <a class="nav-link" href="../add_game">Add Games</a>
+          </li>
+          <li class="nav-item" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="300">
+            <a class="nav-link" href="../view_all_report">Report</a>
+          </li>
+          <li class="nav-item" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="300">
+            <a class="nav-link" href="../user_downloads">User Downloads</a>
+          </li>
 
-
-      <div class="container mt-5 p-4 rounded" style="background-color: #2b2b2b;">
-        <h2 class="text-center text-white m-4">Game Reports</h2>
-    
-        <!-- Responsive Table Wrapper -->
-        <div class="table-responsive">
-            <table class="table table-dark table-hover table-bordered text-center align-middle">
-                <thead class="table-secondary">
-                    <tr>
-                        <th>Game</th>
-                        <th>Reported By</th>
-                        <th>Issue</th>
-                        <th>Date</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for report in reports %}
-                    <tr>
-                        <td>
-                            <a href="game_detail/{{ report.game.id }}" class="text-white text-decoration-none">
-                                {{ report.game.title }}
-                            </a>
-                        </td>
-                        <td>{{ report.user.username }}</td>
-                        <td>{{ report.issue }}</td>
-                        <td>{{ report.created_at|date:"Y-m-d" }}</td>
-                        <td>
-                            <a href="../delete_report/{{ report.id }}" 
-                               onclick="return confirm('Are you sure you want to delete this report?')"
-                               class="btn btn-sm btn-danger">
-                               Delete
-                            </a>
-                        </td>
-                    </tr>
-                    {% empty %}
-                    <tr>
-                        <td colspan="5" class="text-center text-white">No reports found.</td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
+          <li class="nav-item" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="400">
+            <a id="nav-search-btn" class="nav-link" href="#">Search</a>
+          </li>
+          <li class="nav-item" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="500">
+            <a class="nav-link" href="../logout"><span>Logout</span></a>
+          </li>
+        </ul>
+      </div>
     </div>
-    
+  </nav>
+
+  <form id="search-form" method="POST" action="{% url 'admin_search' %}">
+    {% csrf_token %}
+    <div class="full-width search_ p-4">
+      <div class="search-form">
+        <input type="text" name="search" id="search" placeholder="Search">
+      </div>
+    </div>
+  </form>
 
 
-<script src="https://unpkg.com/aos@next/dist/aos.js"></script>
-<script>
-  AOS.init({ offset: 0 });
-</script>
+  <div class="container mt-5 p-4 rounded" style="background-color: #2b2b2b;">
+    <h2 class="text-center text-white m-4">Game Reports</h2>
 
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-    const searchBtn = document.getElementById('nav-search-btn');
-    const searchBar = document.querySelector('.full-width.search_');
+    <!-- Responsive Table Wrapper -->
+    <div class="table-responsive">
+      <table class="table table-dark table-hover table-bordered text-center align-middle">
+        <thead class="table-secondary">
+          <tr>
+            <th>Game</th>
+            <th>Reported By</th>
+            <th>Issue</th>
+            <th>Date</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for report in reports %}
+          <tr>
+            <td>
+              <a href="game_detail/{{ report.game.id }}" class="text-white text-decoration-none">
+                {{ report.game.title }}
+              </a>
+            </td>
+            <td>{{ report.user.username }}</td>
+            <td>{{ report.issue }}</td>
+            <td>{{ report.created_at|date:"Y-m-d" }}</td>
+            <td>
+              {% if not report.resolved %}
+                  <a href="../delete_report/{{ report.id }}"
+                      onclick="return confirm('Are you sure you want to delete this report?')" class="btn btn-sm btn-danger">
+                      Reject
+                  </a>
+              {% endif %}
+          
+              {% if report.resolved %}
+                  <button class="btn btn-sm btn-secondary" disabled>Resolved</button>
+              {% else %}
+                  <a href="{% url 'resolve_report' report.id %}" class="btn btn-sm btn-success">Resolve</a>
+              {% endif %}
+          </td>
+          
+            </td>
+          </tr>
+          {% empty %}
+          <tr>
+            <td colspan="5" class="text-center text-white">No reports found.</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
 
-    searchBtn.addEventListener('click', function(e) {
-      e.preventDefault();
-      searchBar.classList.toggle('active');
+
+
+  <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+  <script>
+    AOS.init({ offset: 0 });
+  </script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const searchBtn = document.getElementById('nav-search-btn');
+      const searchBar = document.querySelector('.full-width.search_');
+
+      searchBtn.addEventListener('click', function (e) {
+        e.preventDefault();
+        searchBar.classList.toggle('active');
+      });
     });
-  });
-</script>
+  </script>
 
 </body>
+
 </html>

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+    {% load static %}
 
 <head>
     <meta charset="UTF-8">
@@ -207,12 +208,24 @@
 
                 {% if messages %}
                 {% for message in messages %}
-                <div class="alert alert-{{ message.tags }} alert-dismissible">
-                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                    {{ message }}
-                </div>
+                    {% if message.tags == "error" %}
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    {% elif message.tags == "success" %}
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    {% elif message.tags == "warning" %}
+                        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    {% elif message.tags == "info" %}
+                        <div class="alert alert-info alert-dismissible fade show" role="alert">
+                    {% else %}
+                        <div class="alert alert-secondary alert-dismissible fade show" role="alert">
+                    {% endif %}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        {{ message }}
+                    </div>
                 {% endfor %}
-                {% endif %}
+            {% endif %}
+            
+            
 
         <form action="/register" id="contactForm" method="POST" style="max-width: 600px; margin: 0 auto;"
             data-aos="fade-in" data-aos-duration="1500">

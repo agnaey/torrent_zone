@@ -15,6 +15,8 @@ import io
 import zipfile
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse, HttpResponseBadRequest
+from django.core.validators import validate_email
+from django.core.exceptions import ValidationError
 # Create your views here.
 
 
@@ -48,21 +50,55 @@ def logout(req):
     return redirect(login)
 
 def register(req):
-    if req.method=='POST':
-        username = req.POST['username']
-        email = req.POST['Email']
-        password = req.POST['password']
-        send_mail('GAME HAVEN','GAME HAVEN Account Created Successfully',settings.EMAIL_HOST_USER,[email])
+    if req.method == 'POST':
+        username = req.POST.get('username', '').strip()
+        email = req.POST.get('Email', '').strip()
+        password = req.POST.get('password', '').strip()
+
+        # Validate input fields
+        if not username or not email or not password:
+            messages.error(req, "All fields are required!")
+            return redirect(register)
+
+        # Email validation
         try:
-            data=User.objects.create_user(first_name=username,username=email,email=email,password=password)
+            validate_email(email)
+        except ValidationError:
+            messages.error(req, "Invalid email format!")
+            return redirect(register)
+
+        # Password length validation
+        if len(password) < 6:
+            messages.error(req, "Password must be at least 6 characters long!")
+            return redirect(register)
+
+        # Check if email already exists
+        if User.objects.filter(email=email).exists():
+            messages.warning(req, "Email is already registered!")
+            return redirect(register)
+
+        # Create user
+        try:
+            data = User.objects.create_user(
+                first_name=username, username=email, email=email, password=password
+            )
             data.save()
-            # messages.success(req, "User Registered Successfully")
+
+            # Send confirmation email
+            send_mail(
+                'GAME HAVEN',
+                'GAME HAVEN Account Created Successfully',
+                settings.EMAIL_HOST_USER,
+                [email],
+            )
+
             return redirect(login)
-        except:
-            messages.warning(req,'user details already exits') 
-            return redirect(register)   
-    else:
-        return render(req,'register.html')
+
+        except Exception as e:
+            messages.error(req, f"Error: {str(e)}")
+            return redirect(register)
+
+    return render(req, 'register.html')
     
 def fake_index(request):
     if 'username' in request.session :
@@ -348,15 +384,36 @@ def admin_search(request):
     else:
         return render(request, 'admin/admin_search.html', {'search': '', 'results': []})
     
-
 def user_downloads(request):
     orders = Order.objects.filter(game__is_paid=True).order_by('-id')
-    return render(request, 'admin/admin_downloads.html', {'orders': orders})
+    total_profit = sum(order.game.price for order in orders)  # Sum up all game prices
+    return render(request, 'admin/admin_downloads.html', {'orders': orders, 'total_profit': total_profit})
+
 
 def delete_report(req,id):
-    report = Order.objects.get(pk=id)
+    report = Report.objects.get(pk=id)
     report.delete()
-    return redirect('user_downloads')
+    return redirect('view_all_report')
+
+# def delete_download(req,id):
+#     report = DownloadHistory.objects.get(pk=id)
+#     report.delete()
+#     return redirect('delete_download')
+
+def resolve_report(request, report_id):
+    report = get_object_or_404(Report, id=report_id)
+    report.resolved = True 
+    report.save()
+
+    send_mail(
+        subject="Your Game Report Has Been Resolved",
+        message=f"Hello {report.user.username},\n\nYour report regarding '{report.game.title}' has been resolved.\n\nThank you for your feedback!\n\n- GameHaven Team",
+        from_email=settings.EMAIL_HOST_USER,
+        recipient_list=[report.user.email],
+        fail_silently=False,
+    )
+
+    return redirect('view_all_report') 
 # --------------user--------------------
 
 def index(request):
