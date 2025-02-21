@@ -103,6 +103,8 @@ def register(req):
 def fake_index(request):
     if 'username' in request.session :
         return redirect(index) 
+    if 'admin' in request.session :
+        return redirect(admin_home)
     
     games=Game.objects.all().order_by("?")
     paid_games = Game.objects.filter(is_paid=True)
@@ -543,13 +545,14 @@ def callback2(request):
         provider_order_id =json.loads(request.POST.get("error[metadata]")).get(
             "order_id"
         )
-        order = Order.objects.get(provider_order_id=provider_order_id)
+        order = Order.objects.filter(provider_order_id=provider_order_id)
         for i in order:
         # order.payment_id = payment_id
             i.status = PaymentStatus.FAILURE
             i.save()
 
-        return render(request, "user/history.html")
+        return redirect("all_download")
+
 
 def remove_cart(request, id):
     cart = Cart.objects.get(id=id)
@@ -713,7 +716,7 @@ def callback(request):
         order.status = PaymentStatus.FAILURE
         order.save()
 
-        return render(request, "user/history.html")
+        return redirect("download",id=order.game.id)
 
 
     
