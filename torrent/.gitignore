@@ -1,0 +1,23 @@
+# Python compiled files
+*.pyc
+__pycache__/
+
+# Virtual environment
+venv/
+.venv/
+
+# Environment variables
+.env
+
+# Database
+db.sqlite3
+
+# Logs
+*.log
+
+# Django static files (if you use collectstatic locally)
+staticfiles/
+
+# IDE / Editor files
+.vscode/
+.idea/
